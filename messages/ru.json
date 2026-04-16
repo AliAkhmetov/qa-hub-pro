@@ -1,0 +1,23 @@
+{
+  "nav": {
+    "knowledgeBase": "База знаний",
+    "about": "Об авторе"
+  },
+  "home": {
+    "greeting": "Привет, я Ali. Это моя открытая база знаний по QA.",
+    "subtitle": "QA Team Lead в Alatau City Bank. Здесь собираю всё, что помогает QA-инженерам расти.",
+    "ctaButton": "Написать в Telegram для консультации",
+    "stats": {
+      "experience": "лет опыта",
+      "subscribers": "подписчиков",
+      "engineers": "инженера в команде"
+    }
+  },
+  "article": {
+    "updatedAt": "Обновлено",
+    "readTime": "мин"
+  },
+  "sidebar": {
+    "search": "Поиск..."
+  }
+}

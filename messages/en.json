@@ -1,0 +1,23 @@
+{
+  "nav": {
+    "knowledgeBase": "Knowledge Base",
+    "about": "About"
+  },
+  "home": {
+    "greeting": "Hi, I'm Ali. This is my open QA knowledge base.",
+    "subtitle": "QA Team Lead at Alatau City Bank. Collecting everything that helps QA engineers grow.",
+    "ctaButton": "Message on Telegram for a consultation",
+    "stats": {
+      "experience": "years experience",
+      "subscribers": "subscribers",
+      "engineers": "engineers on team"
+    }
+  },
+  "article": {
+    "updatedAt": "Updated",
+    "readTime": "min"
+  },
+  "sidebar": {
+    "search": "Search..."
+  }
+}
