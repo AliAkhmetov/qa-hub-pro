@@ -27,8 +27,8 @@ export function transformArticle(page: Record<string, any>): Article {
 }
 
 export async function getArticles(language?: 'ru' | 'en'): Promise<Article[]> {
-  const response = await notion.databases.query({
-    database_id: databaseId,
+  const response = await notion.dataSources.query({
+    data_source_id: databaseId,
     filter: {
       property: 'Status',
       select: { equals: 'Published' },
@@ -41,8 +41,8 @@ export async function getArticles(language?: 'ru' | 'en'): Promise<Article[]> {
 }
 
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
-  const response = await notion.databases.query({
-    database_id: databaseId,
+  const response = await notion.dataSources.query({
+    data_source_id: databaseId,
     filter: {
       property: 'Slug',
       rich_text: { equals: slug },
