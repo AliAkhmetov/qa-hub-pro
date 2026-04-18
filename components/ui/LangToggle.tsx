@@ -13,16 +13,18 @@ export function LangToggle({ locale }: LangToggleProps) {
   const newPath = pathname.replace(`/${locale}`, `/${otherLocale}`)
 
   return (
-    <div className="flex items-center gap-1 text-sm font-mono">
-      <span style={{ color: locale === 'ru' ? 'var(--accent)' : 'var(--text-muted)', fontWeight: locale === 'ru' ? 500 : 400 }}>RU</span>
-      <span style={{ color: 'var(--text-hint)' }}>/</span>
-      <Link
-        href={newPath}
-        style={{ color: locale === 'en' ? 'var(--accent)' : 'var(--text-muted)', fontWeight: locale === 'en' ? 500 : 400 }}
-        className="hover:opacity-80 transition-opacity"
-      >
-        EN
-      </Link>
-    </div>
+    <button
+      onClick={() => { window.location.href = newPath }}
+      className="px-3 py-2 rounded-full text-sm transition-colors hover:opacity-80"
+      style={{
+        fontFamily: 'JetBrains Mono, monospace',
+        fontSize: '11px',
+        letterSpacing: '.15em',
+        border: '1px solid var(--line)',
+        color: 'var(--fg-soft)',
+      }}
+    >
+      {locale === 'ru' ? 'RU' : 'EN'}
+    </button>
   )
 }
