@@ -91,3 +91,145 @@ code:not(pre code) {
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 999px; }
 ::-webkit-scrollbar-track { background: transparent; }
+
+/* ── Home page layout ─── */
+
+/* Bento grid */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: minmax(180px, auto);
+  gap: 16px;
+}
+.bento-cat {
+  position: relative;
+  padding: 26px 28px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--bg-elev);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color .3s, transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.bento-cat:hover { border-color: var(--line-strong); transform: translateY(-3px); }
+.bento-cat::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(120px 120px at var(--mx,100%) var(--my,0%),
+    color-mix(in oklab, var(--accent) 14%, transparent), transparent 60%);
+  opacity: 0;
+  transition: opacity .4s;
+}
+.bento-cat:hover::after { opacity: 1; }
+.bento-cat .cat-arrow { transition: .3s; opacity: .4; }
+.bento-cat:hover .cat-arrow { opacity: 1; transform: translate(4px,-4px); }
+.c-theory  { grid-column: span 3; grid-row: span 2; }
+.c-api     { grid-column: span 3; }
+.c-mobile  { grid-column: span 2; }
+.c-perf    { grid-column: span 2; }
+.c-auto    { grid-column: span 2; }
+.c-featured {
+  grid-column: span 3;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: transparent;
+}
+.mini-stats   { grid-column: span 2; padding: 22px; border: 1px solid var(--line); border-radius: 20px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
+.c-newsletter { grid-column: span 3; }
+
+/* Latest articles grid */
+.latest-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 32px;
+  border-top: 1px solid var(--line);
+  padding-top: 32px;
+}
+
+/* Article placeholder */
+.art-ph {
+  aspect-ratio: 4/3;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.art-ph::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    135deg,
+    transparent 0 14px,
+    color-mix(in oklab, var(--fg) 4%, transparent) 14px 15px
+  );
+}
+.art-ph-label {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: .15em;
+}
+.art-feature .art-ph { aspect-ratio: 16/10; }
+.art-feature h3 { font-size: 48px !important; }
+
+/* Marquee strip */
+.marquee { overflow: hidden; mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee-track { display: flex; gap: 48px; animation: scroll 40s linear infinite; white-space: nowrap; width: max-content; }
+
+/* Principles */
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+  padding-top: 56px;
+}
+.principle-item { padding: 0 28px 28px 0; border-right: 1px solid var(--line); }
+.principle-item:last-child { border: 0; }
+
+/* Tools teaser */
+.tools-teaser {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  background: var(--bg-elev);
+}
+.tools-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.tool-item {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  transition: .25s;
+}
+.tool-item:hover { border-color: var(--line-strong); background: var(--bg-soft); }
+
+/* Responsive */
+@media (max-width: 960px) {
+  .bento { grid-template-columns: repeat(2, 1fr); }
+  .c-theory, .c-api, .c-mobile, .c-perf, .c-auto, .c-featured, .c-newsletter, .mini-stats { grid-column: span 2; grid-row: auto; }
+  .latest-grid { grid-template-columns: 1fr; }
+  .principles-grid { grid-template-columns: 1fr; }
+  .tools-teaser { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .bento { grid-template-columns: 1fr; }
+  .c-theory, .c-api, .c-mobile, .c-perf, .c-auto, .c-featured, .c-newsletter, .mini-stats { grid-column: span 1; }
+}
