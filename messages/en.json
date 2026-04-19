@@ -1,12 +1,14 @@
 {
   "nav": {
     "knowledgeBase": "Knowledge Base",
-    "about": "About"
+    "about": "About",
+    "roadmap": "Roadmap"
   },
   "home": {
     "greeting": "Hi, I'm Ali. This is my open QA knowledge base.",
     "subtitle": "QA Team Lead at Alatau City Bank. Collecting everything that helps QA engineers grow.",
     "ctaButton": "Message on Telegram for a consultation",
+    "categoryTitle": "Knowledge Base Sections",
     "stats": {
       "experience": "years experience",
       "subscribers": "subscribers",
@@ -14,10 +16,56 @@
     }
   },
   "article": {
+    "knowledgeBase": "Knowledge Base",
     "updatedAt": "Updated",
-    "readTime": "min"
+    "readTime": "min",
+    "imageAlt": "Article image",
+    "notFoundTitle": "Article not found",
+    "notFoundText": "This article is missing from the knowledge base or has not been published yet.",
+    "emptyContent": "Article content is not available yet.",
+    "commentsTitle": "Comments"
   },
   "sidebar": {
     "search": "Search..."
+  },
+  "telegram": {
+    "consultation": "Consultation"
+  },
+  "theme": {
+    "switchToLight": "Switch to light theme",
+    "switchToDark": "Switch to dark theme"
+  },
+  "codeBlock": {
+    "copy": "Copy",
+    "copied": "Copied"
+  },
+  "aboutPage": {
+    "eyebrow": "About",
+    "role": "QA Team Lead · Alatau City Bank · Almaty",
+    "summary": "7 years in QA across manual testing, API validation, automation, fintech domains, and team leadership. This knowledge base is built from hands-on practice to help QA engineers grow faster and move through the next career stage with more confidence.",
+    "telegram": "Message on Telegram",
+    "offersTitle": "What I Offer",
+    "offersSubtitle": "Practical consulting focused on outcomes: interview prep, CV review, and career planning.",
+    "telegramHandle": "Message @tacousti on Telegram"
+  },
+  "roadmapPage": {
+    "eyebrow": "Career roadmap",
+    "title": "The QA path from Junior to Lead",
+    "subtitle": "A static growth map with skills, tools, and rough timelines. Hover a card to spotlight a level and inspect its details.",
+    "skills": "Skills",
+    "tools": "Tools"
+  },
+  "comments": {
+    "title": "Comments",
+    "subtitle": "Article discussion and practical notes from readers.",
+    "empty": "No comments yet. Be the first to add one.",
+    "loginPrompt": "Sign in with GitHub to leave a comment.",
+    "signIn": "Sign in with GitHub",
+    "textarea": "Share a thought, question, or practical takeaway...",
+    "submit": "Post comment",
+    "sending": "Sending...",
+    "unavailable": "Comments will become available after Supabase and NextAuth are configured.",
+    "error": "Could not submit the comment. Please try again.",
+    "success": "Comment submitted."
   }
 }

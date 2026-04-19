@@ -87,6 +87,17 @@ code:not(pre code) {
 
 .reveal { animation: fadeUp .9s cubic-bezier(.2,.7,.2,1) both; }
 
+/* ── Article prose ─── */
+.drop-cap::first-letter {
+  font-family: 'Instrument Serif', serif;
+  font-size: 4.2em;
+  line-height: .78;
+  float: left;
+  margin-right: .08em;
+  margin-top: .06em;
+  color: var(--fg);
+}
+
 /* ── Scrollbar ─── */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 999px; }

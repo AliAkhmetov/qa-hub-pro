@@ -1,13 +1,17 @@
 'use client'
 
 import { useTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
+import { useSyncExternalStore } from 'react'
 
 export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => setMounted(true), [])
+  const t = useTranslations('theme')
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  )
 
   if (!mounted) return <div className="w-8 h-8" />
 
@@ -17,7 +21,7 @@ export function ThemeSwitcher() {
     <button
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       className="w-8 h-8 flex items-center justify-center rounded-md transition-colors text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface2)]"
-      aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+      aria-label={isDark ? t('switchToLight') : t('switchToDark')}
     >
       {isDark ? (
         /* Sun icon */

@@ -1,216 +1,82 @@
+import { JwtDecoder } from '@/components/tools/JwtDecoder'
+import { JsonFormatter } from '@/components/tools/JsonFormatter'
+import { RegexTester } from '@/components/tools/RegexTester'
+import { Base64Tool } from '@/components/tools/Base64Tool'
+import { UuidGenerator } from '@/components/tools/UuidGenerator'
+
 interface ToolsPageProps {
   params: Promise<{ locale: string }>
 }
-
-const TOOLS = [
-  {
-    id: 'jwt',
-    nameRu: 'JWT Decoder',
-    nameEn: 'JWT Decoder',
-    descRu: 'Декодируй и инспектируй заголовок, payload и подпись JWT-токена прямо в браузере — без отправки данных на сервер.',
-    descEn: 'Decode and inspect the header, payload and signature of any JWT token — entirely in-browser, nothing leaves your machine.',
-  },
-  {
-    id: 'json',
-    nameRu: 'JSON Formatter',
-    nameEn: 'JSON Formatter',
-    descRu: 'Форматируй, минифицируй и валидируй JSON. Подсветка синтаксиса, подсказки об ошибках, копирование одной кнопкой.',
-    descEn: 'Format, minify and validate JSON. Syntax highlighting, inline error hints, one-click copy.',
-  },
-  {
-    id: 'regex',
-    nameRu: 'Regex Tester',
-    nameEn: 'Regex Tester',
-    descRu: 'Тестируй регулярные выражения в реальном времени. Показывает совпадения, группы и именованные захваты с подсветкой.',
-    descEn: 'Test regular expressions in real time. Highlights matches, capture groups and named captures inline.',
-  },
-  {
-    id: 'base64',
-    nameRu: 'Base64 Encoder / Decoder',
-    nameEn: 'Base64 Encoder / Decoder',
-    descRu: 'Кодируй и декодируй строки в Base64 и обратно. Поддерживает URL-safe вариант и бинарный ввод.',
-    descEn: 'Encode and decode strings to and from Base64. Supports URL-safe variant and binary input.',
-  },
-  {
-    id: 'uuid',
-    nameRu: 'UUID Generator',
-    nameEn: 'UUID Generator',
-    descRu: 'Генерируй UUID v4 пачками или по одному. Копируй в буфер, выбирай формат: с дефисами, без, в верхнем регистре.',
-    descEn: 'Generate UUID v4 in bulk or one at a time. Copy to clipboard, choose format: hyphenated, compact, uppercase.',
-  },
-]
 
 export default async function ToolsPage({ params }: ToolsPageProps) {
   const { locale } = await params
   const isRu = locale === 'ru'
 
+  const TOOLS = [
+    { id: 'jwt',    num: 'TOOL 01 / 05', titleRu: <>JWT <i style={{ color: 'var(--muted)' }}>decoder</i></>, titleEn: <>JWT <i style={{ color: 'var(--muted)' }}>decoder</i></>, descRu: 'Декодирует JWT: header, payload и подпись. Проверку подписи намеренно не делаю — подпись смотрим на бэке.', descEn: 'Decodes a JWT: header, payload and signature. Signature verification is intentionally omitted — verify server-side.' },
+    { id: 'json',   num: 'TOOL 02 / 05', titleRu: <>JSON <i style={{ color: 'var(--muted)' }}>formatter</i></>, titleEn: <>JSON <i style={{ color: 'var(--muted)' }}>formatter</i></>, descRu: 'Форматирует и минифицирует JSON. Подсвечивает синтаксические ошибки.', descEn: 'Formats and minifies JSON. Highlights syntax errors.' },
+    { id: 'regex',  num: 'TOOL 03 / 05', titleRu: <>Regex <i style={{ color: 'var(--muted)' }}>tester</i></>, titleEn: <>Regex <i style={{ color: 'var(--muted)' }}>tester</i></>, descRu: 'JavaScript-regex. Тестовая строка подсвечивается на каждом совпадении в реальном времени.', descEn: 'JavaScript regex. Every match is highlighted in real time.' },
+    { id: 'base64', num: 'TOOL 04 / 05', titleRu: <>Base64 <i style={{ color: 'var(--muted)' }}>encode / decode</i></>, titleEn: <>Base64 <i style={{ color: 'var(--muted)' }}>encode / decode</i></>, descRu: 'В обе стороны. Поддерживает UTF-8.', descEn: 'Both directions. UTF-8 safe.' },
+    { id: 'uuid',   num: 'TOOL 05 / 05', titleRu: <>UUID <i style={{ color: 'var(--muted)' }}>generator</i></>, titleEn: <>UUID <i style={{ color: 'var(--muted)' }}>generator</i></>, descRu: <>Генератор UUID v4 через <code>crypto.randomUUID()</code>. Массово, с копированием одним кликом.</>, descEn: <>UUID v4 via <code>crypto.randomUUID()</code>. Batch generation, one-click copy.</> },
+  ]
+
+  const navLabels: Record<string, string> = { jwt: 'JWT decoder', json: 'JSON formatter', regex: 'Regex tester', base64: 'Base64', uuid: 'UUID generator' }
+
   return (
-    <div style={{ maxWidth: 1360, margin: '0 auto', padding: '0 32px' }}>
-      <section style={{ paddingTop: 56 }}>
+    <div style={{ maxWidth: 1360, margin: '0 auto', padding: '0 32px 160px' }}>
 
-        {/* ── KICKER BAR ── */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
-          paddingBottom: 28,
-          borderBottom: '1px solid var(--line)',
-          marginBottom: 56,
-        }}>
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 10,
-            fontFamily: "'JetBrains Mono', monospace",
-            fontSize: 11,
-            color: 'var(--muted)',
-            letterSpacing: '.2em',
-            textTransform: 'uppercase' as const,
-          }}>
-            <span style={{ width: 24, height: 1, background: 'var(--muted)', display: 'inline-block' }} />
-            {isRu ? 'QA ИНСТРУМЕНТЫ' : 'QA TOOLBOX'}
-          </div>
-          <span style={{
-            fontFamily: "'JetBrains Mono', monospace",
-            fontSize: 11,
-            color: 'var(--muted)',
-            letterSpacing: '.2em',
-          }}>
-            5 TOOLS · {isRu ? 'СКОРО' : 'COMING SOON'}
-          </span>
+      {/* ── HEADER ── */}
+      <div style={{ paddingTop: 64, paddingBottom: 40 }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', textTransform: 'uppercase' as const, marginBottom: 20 }}>
+          <span style={{ width: 24, height: 1, background: 'var(--muted)', display: 'inline-block' }} />
+          {isRu ? 'QA ИНСТРУМЕНТЫ · 05 УТИЛИТ · РАБОТАЕТ В БРАУЗЕРЕ' : 'QA TOOLBOX · 05 TOOLS · WORKS IN BROWSER'}
         </div>
+        <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(64px, 10vw, 140px)', lineHeight: .9, letterSpacing: '-.03em', margin: '0 0 24px', fontWeight: 400 }}>
+          {isRu ? <>Инструменты <i style={{ color: 'var(--muted)' }}>для&nbsp;будней.</i></> : <>Tools <i style={{ color: 'var(--muted)' }}>for&nbsp;daily&nbsp;work.</i></>}
+        </h1>
+        <p style={{ maxWidth: '60ch', fontSize: 18, lineHeight: 1.55, color: 'var(--fg-soft)', margin: '0 0 32px' }}>
+          {isRu
+            ? 'Пять мини-утилит, которые я сам открываю каждый день. Всё работает прямо в браузере — никаких трекеров, никаких серверов, никакой регистрации. Данные не покидают вашу вкладку.'
+            : 'Five small tools I open every single day. Everything runs in the browser — no trackers, no server, no sign-up. Your data never leaves the tab.'}
+        </p>
 
-        {/* ── BIG HEADING ── */}
-        <div style={{ marginBottom: 80 }}>
-          <h1 style={{
-            fontFamily: "'Instrument Serif', serif",
-            fontWeight: 400,
-            fontSize: 'clamp(56px, 8vw, 120px)',
-            lineHeight: 0.9,
-            letterSpacing: '-.035em',
-            margin: '0 0 24px',
-            color: 'var(--fg)',
-          }}>
-            {isRu ? (
-              <>
-                <span style={{ display: 'block' }}>Инструменты</span>
-                <span style={{ display: 'block', color: 'var(--muted)', fontStyle: 'italic' }}>/ Tools</span>
-              </>
-            ) : (
-              <>
-                <span style={{ display: 'block' }}>Tools</span>
-                <span style={{ display: 'block', color: 'var(--muted)', fontStyle: 'italic' }}>/ Инструменты</span>
-              </>
-            )}
-          </h1>
-          <p style={{
-            fontSize: 16,
-            lineHeight: 1.6,
-            color: 'var(--fg-soft)',
-            maxWidth: '52ch',
-            margin: 0,
-          }}>
-            {isRu
-              ? 'Пять утилит, которые открываешь каждый день. Работают прямо в браузере — без трекеров, без регистрации. Интерактивные версии в разработке.'
-              : 'Five utilities you open every day. Run entirely in the browser — no tracking, no signup. Interactive versions are in development.'}
-          </p>
-        </div>
+        {/* Quick nav */}
+        <nav style={{ display: 'flex', gap: 8, flexWrap: 'wrap', padding: '20px 0', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
+          {TOOLS.map(t => (
+            <a key={t.id} href={`#${t.id}`} style={{
+              padding: '8px 16px', borderRadius: 999, border: '1px solid var(--line)',
+              fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '.1em',
+              color: 'var(--fg-soft)', transition: '.2s',
+            }}>
+              {navLabels[t.id]}
+            </a>
+          ))}
+        </nav>
+      </div>
 
-        {/* ── TOOLS GRID ── */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: 24,
-          marginBottom: 120,
-        }}>
-          {TOOLS.map((tool) => (
-            <div
-              key={tool.id}
-              id={tool.id}
-              style={{
-                padding: 28,
-                border: '1px solid var(--line)',
-                borderRadius: 20,
-                background: 'var(--bg-elev)',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 16,
-              }}
-            >
-              {/* Tool anchor label */}
-              <div style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: 10,
-                color: 'var(--muted)',
-                letterSpacing: '.2em',
-                textTransform: 'uppercase' as const,
-              }}>
-                #{tool.id}
-              </div>
-
-              {/* Tool name */}
-              <h3 style={{
-                fontFamily: "'Instrument Serif', serif",
-                fontWeight: 400,
-                fontSize: 32,
-                lineHeight: 1.05,
-                letterSpacing: '-.02em',
-                margin: 0,
-                color: 'var(--fg)',
-              }}>
-                {isRu ? tool.nameRu : tool.nameEn}
-              </h3>
-
-              {/* Description */}
-              <p style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: 12,
-                lineHeight: 1.65,
-                color: 'var(--fg-soft)',
-                margin: 0,
-                flex: 1,
-              }}>
+      {/* ── TOOLS ── */}
+      {TOOLS.map((tool, idx) => (
+        <section key={tool.id} id={tool.id} style={{ padding: '56px 0', borderBottom: idx < TOOLS.length - 1 ? '1px solid var(--line)' : 'none' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 24 }}>
+            <div>
+              <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 64, margin: 0, letterSpacing: '-.02em', fontWeight: 400, lineHeight: 1 }}>
+                {isRu ? tool.titleRu : tool.titleEn}
+              </h2>
+              <p style={{ margin: '8px 0 0', color: 'var(--fg-soft)', fontSize: 15, maxWidth: '60ch', lineHeight: 1.55 }}>
                 {isRu ? tool.descRu : tool.descEn}
               </p>
-
-              {/* Coming soon badge */}
-              <div style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-                paddingTop: 16,
-                borderTop: '1px solid var(--line)',
-              }}>
-                <span style={{
-                  display: 'inline-block',
-                  width: 6,
-                  height: 6,
-                  borderRadius: '50%',
-                  background: 'var(--muted)',
-                }} />
-                <span style={{
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: 10,
-                  color: 'var(--muted)',
-                  letterSpacing: '.2em',
-                  textTransform: 'uppercase' as const,
-                }}>
-                  {isRu ? 'Скоро' : 'Coming soon'} —
-                </span>
-                <span style={{
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: 10,
-                  color: 'var(--muted)',
-                  letterSpacing: '.1em',
-                }}>
-                  {isRu ? 'интерактивная версия в разработке' : 'interactive version in development'}
-                </span>
-              </div>
             </div>
-          ))}
-        </div>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', flexShrink: 0 }}>{tool.num}</span>
+          </div>
 
-      </section>
+          {tool.id === 'jwt'    && <JwtDecoder    isRu={isRu} />}
+          {tool.id === 'json'   && <JsonFormatter  isRu={isRu} />}
+          {tool.id === 'regex'  && <RegexTester    isRu={isRu} />}
+          {tool.id === 'base64' && <Base64Tool     isRu={isRu} />}
+          {tool.id === 'uuid'   && <UuidGenerator  isRu={isRu} />}
+        </section>
+      ))}
+
     </div>
   )
 }

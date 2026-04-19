@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
 interface CodeBlockProps {
@@ -8,6 +9,7 @@ interface CodeBlockProps {
 }
 
 export function CodeBlock({ code, language = 'text' }: CodeBlockProps) {
+  const t = useTranslations('codeBlock')
   const [copied, setCopied] = useState(false)
 
   const handleCopy = async () => {
@@ -31,7 +33,7 @@ export function CodeBlock({ code, language = 'text' }: CodeBlockProps) {
           className="text-xs transition-colors"
           style={{ color: copied ? 'var(--accent)' : 'var(--text-muted)' }}
         >
-          {copied ? 'Copied!' : 'Copy'}
+          {copied ? t('copied') : t('copy')}
         </button>
       </div>
       <pre className="overflow-x-auto p-4 text-sm font-mono leading-relaxed" style={{ color: 'var(--text-primary)' }}>

@@ -9,17 +9,35 @@ const article = {
 
 describe('ArticleHeader', () => {
   it('renders the article title', () => {
-    render(<ArticleHeader article={article} locale="ru" />)
+    render(
+      <ArticleHeader
+        article={article}
+        locale="ru"
+        labels={{ knowledgeBase: 'База знаний', updatedAt: 'Обновлено', readTime: 'мин' }}
+      />
+    )
     expect(screen.getByRole('heading', { name: 'Техники тест-дизайна' })).toBeInTheDocument()
   })
 
   it('renders level tag', () => {
-    render(<ArticleHeader article={article} locale="ru" />)
+    render(
+      <ArticleHeader
+        article={article}
+        locale="ru"
+        labels={{ knowledgeBase: 'База знаний', updatedAt: 'Обновлено', readTime: 'мин' }}
+      />
+    )
     expect(screen.getByText('Junior')).toBeInTheDocument()
   })
 
   it('renders read time', () => {
-    render(<ArticleHeader article={article} locale="ru" />)
+    render(
+      <ArticleHeader
+        article={article}
+        locale="ru"
+        labels={{ knowledgeBase: 'База знаний', updatedAt: 'Обновлено', readTime: 'мин' }}
+      />
+    )
     expect(screen.getByText(/8/)).toBeInTheDocument()
   })
 })

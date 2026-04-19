@@ -1,87 +1,71 @@
+import Link from 'next/link'
 import type { Article } from '@/lib/notion.types'
 
 interface ArticleHeaderProps {
   article: Article
   locale: string
+  labels: {
+    knowledgeBase: string
+    updatedAt: string
+    readTime: string
+  }
 }
 
-export function ArticleHeader({ article, locale }: ArticleHeaderProps) {
-  const updatedLabel = locale === 'ru' ? 'Обновлено' : 'Updated'
-  const readTimeLabel = locale === 'ru' ? 'мин' : 'min'
-  const kbLabel = locale === 'ru' ? 'База знаний' : 'Knowledge Base'
-
+export function ArticleHeader({ article, locale, labels }: ArticleHeaderProps) {
   const formattedDate = article.updatedAt
     ? new Date(article.updatedAt).toLocaleDateString(
         locale === 'ru' ? 'ru-RU' : 'en-US',
-        { day: 'numeric', month: 'short', year: 'numeric' }
+        { day: 'numeric', month: 'long', year: 'numeric' }
       )
     : ''
 
   return (
-    <header className="mb-8">
-      {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
-        <span>{kbLabel}</span>
-        <span style={{ color: 'var(--text-hint)' }}>›</span>
-        <span>{article.category}</span>
-        <span style={{ color: 'var(--text-hint)' }}>›</span>
-        <span style={{ color: 'var(--text-primary)' }}>{article.title}</span>
-      </nav>
-
-      {/* Title */}
-      <h1 className="font-mono mb-4" style={{ color: 'var(--text-primary)' }}>{article.title}</h1>
-
-      {/* Meta row */}
-      <div className="flex items-center flex-wrap gap-3">
-        {article.level.map((lvl) => {
-          const colors: Record<string, { bg: string; color: string; borderColor: string }> = {
-            Junior: { bg: 'rgba(110,231,183,0.1)', color: '#6ee7b7', borderColor: 'rgba(110,231,183,0.2)' },
-            Middle: { bg: 'rgba(96,165,250,0.1)', color: '#60a5fa', borderColor: 'rgba(96,165,250,0.2)' },
-            Senior: { bg: 'rgba(167,139,250,0.1)', color: '#a78bfa', borderColor: 'rgba(167,139,250,0.2)' },
-            Lead: { bg: 'rgba(251,146,60,0.1)', color: '#fb923c', borderColor: 'rgba(251,146,60,0.2)' },
-          }
-          const c = colors[lvl] ?? { bg: 'var(--surface2)', color: 'var(--text-muted)', borderColor: 'var(--border)' }
-          return (
-            <span
-              key={lvl}
-              className="text-xs px-2.5 py-1 rounded-full font-medium"
-              style={{ backgroundColor: c.bg, color: c.color, border: `1px solid ${c.borderColor}` }}
-            >
-              {lvl}
-            </span>
-          )
-        })}
-
-        <span
-          className="text-xs px-2.5 py-1 rounded-full"
-          style={{ border: '1px solid var(--border)', color: 'var(--text-muted)' }}
-        >
-          {article.category}
-        </span>
-
-        {formattedDate && (
-          <>
-            <span style={{ color: 'var(--text-hint)' }}>·</span>
-            <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
-              {updatedLabel}: {formattedDate}
-            </span>
-          </>
-        )}
-
-        {article.readTime > 0 && (
-          <>
-            <span style={{ color: 'var(--text-hint)' }}>·</span>
-            <span className="text-sm flex items-center gap-1" style={{ color: 'var(--text-muted)' }}>
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-              </svg>
-              {article.readTime} {readTimeLabel}
-            </span>
-          </>
-        )}
+    <header style={{ paddingTop: 48, marginBottom: 56 }}>
+      {/* Kicker */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', paddingBottom: 20, borderBottom: '1px solid var(--line)', marginBottom: 36, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em' }}>
+        <nav style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <Link href={`/${locale}/articles`} style={{ color: 'var(--muted)' }}>{labels.knowledgeBase}</Link>
+          <span>·</span>
+          <span style={{ color: 'var(--accent)' }}>{article.category.toUpperCase()}</span>
+        </nav>
+        <div style={{ display: 'flex', gap: 16 }}>
+          {article.level.map(lvl => (
+            <span key={lvl}>{lvl.toUpperCase()}</span>
+          ))}
+          {article.readTime > 0 && (
+            <span>{article.readTime} {labels.readTime.toUpperCase()}</span>
+          )}
+        </div>
       </div>
 
-      <hr className="mt-6" style={{ borderColor: 'var(--border)' }} />
+      {/* Big serif title */}
+      <h1 style={{
+        fontFamily: 'var(--font-serif)',
+        fontWeight: 400,
+        fontSize: 'clamp(40px, 6vw, 80px)',
+        lineHeight: 1,
+        letterSpacing: '-.03em',
+        margin: '0 0 24px',
+        maxWidth: '18ch',
+      }}>
+        {article.title}
+      </h1>
+
+      {/* Description */}
+      {article.description && (
+        <p style={{ fontSize: 18, lineHeight: 1.55, color: 'var(--fg-soft)', margin: '0 0 24px', maxWidth: '52ch' }}>
+          {article.description}
+        </p>
+      )}
+
+      {/* Meta row */}
+      <div style={{ display: 'flex', gap: 24, alignItems: 'center', fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.1em' }}>
+        {formattedDate && <span>{formattedDate}</span>}
+        <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <span style={{ width: 24, height: 1, background: 'var(--line)', display: 'inline-block' }} />
+          Ali Akhmetov
+        </span>
+      </div>
     </header>
   )
 }

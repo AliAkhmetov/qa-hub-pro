@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# QA Knowledge
+
+QA Knowledge is a bilingual QA knowledge base built with Next.js App Router.
+
+## Current Scope
+
+- knowledge base home page
+- article pages powered by Notion
+- dark/light themes
+- RU/EN routing via `next-intl`
+- about page
+- roadmap page
+- comments/auth foundation via Supabase + NextAuth
 
 ## Getting Started
 
-First, run the development server:
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The root route redirects to `http://localhost:3000/ru`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copy `.env.local.example` to `.env.local` and fill in:
 
-## Learn More
+- Notion CMS credentials
+- GitHub OAuth credentials
+- NextAuth secret and URL
+- Supabase URL, publishable key, and server-side service role key
 
-To learn more about Next.js, take a look at the following resources:
+## Comments Setup
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Comments require:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. configured GitHub OAuth in `.env.local`
+2. configured Supabase public and service-role keys in `.env.local`
+3. a `comments` table in Supabase
 
-## Deploy on Vercel
+Use the SQL in `supabase/comments.sql` to create the table and policies.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Quality Checks
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run lint
+npm test -- --runInBand
+```
+
+## Notes
+
+- Comments/auth foundation is implemented, but real posting requires working external credentials.
+- `SUPABASE_SERVICE_ROLE_KEY` must stay server-only and must never be exposed in client-side code.
+- The project currently targets Next.js `16.2.4`.

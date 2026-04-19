@@ -2,12 +2,13 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import type { Article } from '@/lib/notion.types'
 
 interface SidebarProps {
   articles: Article[]
   locale: string
-  currentSlug?: string
 }
 
 const CATEGORIES = [
@@ -19,16 +20,23 @@ const CATEGORIES = [
   { key: 'Карьера в QA', en: 'QA Career' },
 ]
 
-export function Sidebar({ articles, locale, currentSlug }: SidebarProps) {
+export function Sidebar({ articles, locale }: SidebarProps) {
+  const t = useTranslations('sidebar')
   const [openCategories, setOpenCategories] = useState<Set<string>>(
     new Set(CATEGORIES.map((c) => c.key))
   )
   const [search, setSearch] = useState('')
+  const pathname = usePathname()
+  const currentSlug = pathname?.split('/articles/')[1]?.split('/')[0]
 
   const toggleCategory = (key: string) => {
     setOpenCategories((prev) => {
       const next = new Set(prev)
-      next.has(key) ? next.delete(key) : next.add(key)
+      if (next.has(key)) {
+        next.delete(key)
+      } else {
+        next.add(key)
+      }
       return next
     })
   }
@@ -46,7 +54,7 @@ export function Sidebar({ articles, locale, currentSlug }: SidebarProps) {
       <div className="p-3" style={{ borderBottom: '1px solid var(--border)' }}>
         <input
           type="text"
-          placeholder={locale === 'ru' ? 'Поиск...' : 'Search...'}
+          placeholder={t('search')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full px-3 py-1.5 text-sm rounded-md focus:outline-none"
