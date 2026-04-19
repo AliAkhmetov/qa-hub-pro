@@ -1,5 +1,5 @@
-import { getArticles } from '@/lib/notion'
-import { ArticlesLayout } from '@/components/articles/ArticlesLayout'
+import { getArticles, getArticleBySlug, getArticleBlocks } from '@/lib/notion'
+import { KnowledgeBase } from '@/components/knowledge/KnowledgeBase'
 import type { Article } from '@/lib/notion.types'
 
 interface HomePageProps {
@@ -17,47 +17,46 @@ export default async function HomePage({ params }: HomePageProps) {
     // graceful degradation
   }
 
-  return (
-    <div style={{ maxWidth: 1360, margin: '0 auto', padding: '0 32px 120px' }}>
-
-      {/* Kicker bar */}
-      <div style={{
-        display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
-        paddingTop: 56, paddingBottom: 28,
-        borderBottom: '1px solid var(--line)', marginBottom: 48,
-        fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em',
-      }}>
-        <span>{isRu ? 'БАЗА ЗНАНИЙ' : 'KNOWLEDGE BASE'}</span>
-        <span>{articles.length} {isRu ? 'СТАТЕЙ' : 'ARTICLES'}</span>
-      </div>
-
-      {/* Big serif heading */}
-      <h1 style={{
-        fontFamily: 'var(--font-serif)', fontWeight: 400,
-        fontSize: 'clamp(56px, 8vw, 120px)', lineHeight: .9,
-        letterSpacing: '-.035em', margin: '0 0 64px',
-      }}>
-        <span style={{ display: 'block' }}>{isRu ? 'База' : 'Knowledge'}</span>
-        <span style={{ display: 'block', color: 'var(--muted)', fontStyle: 'italic' }}>
-          {isRu ? 'знаний' : 'Base'}
-        </span>
-      </h1>
-
-      {articles.length === 0 ? (
-        <div style={{ padding: '80px 0', textAlign: 'center', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--accent)', letterSpacing: '.2em', marginBottom: 24 }}>
-            {isRu ? 'СТАТЬИ СКОРО ПОЯВЯТСЯ' : 'ARTICLES COMING SOON'}
-          </div>
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--muted)', maxWidth: '42ch', margin: '0 auto', lineHeight: 1.6 }}>
-            {isRu
-              ? 'Статьи публикуются из Notion. Пока ни одна статья не помечена как Published.'
-              : 'Articles are published from Notion. No articles marked Published yet.'}
-          </p>
+  if (!articles.length) {
+    return (
+      <div style={{ maxWidth: 640, margin: '120px auto', padding: '0 32px', textAlign: 'center' }}>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--accent)', letterSpacing: '.2em', marginBottom: 20 }}>
+          {isRu ? 'БАЗА ЗНАНИЙ' : 'KNOWLEDGE BASE'}
         </div>
-      ) : (
-        <ArticlesLayout articles={articles} locale={locale} isRu={isRu} />
-      )}
+        <h1 style={{ fontFamily: 'var(--font-serif)', fontWeight: 400, fontSize: 48, margin: '0 0 16px', letterSpacing: '-.02em' }}>
+          {isRu ? 'Статьи скоро появятся' : 'Articles coming soon'}
+        </h1>
+        <p style={{ color: 'var(--muted)', fontFamily: 'var(--font-mono)', fontSize: 13 }}>
+          {isRu ? 'Публикуется из Notion' : 'Published from Notion'}
+        </p>
+      </div>
+    )
+  }
 
-    </div>
+  // Fetch first article content server-side (no loading flash)
+  const firstArticle = articles[0]
+  let initialArticle: Article = firstArticle
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let initialBlocks: Record<string, any>[] = []
+
+  try {
+    const fetched = await getArticleBySlug(firstArticle.slug)
+    if (fetched) {
+      initialArticle = fetched
+      initialBlocks = await getArticleBlocks(fetched.id)
+    }
+  } catch {
+    // use article without blocks
+  }
+
+  return (
+    <KnowledgeBase
+      articles={articles}
+      locale={locale}
+      isRu={isRu}
+      initialSlug={firstArticle.slug}
+      initialArticle={initialArticle}
+      initialBlocks={initialBlocks}
+    />
   )
 }
