@@ -1,5 +1,5 @@
 import { getArticles } from '@/lib/notion'
-import { ArticleFilters } from '@/components/articles/ArticleFilters'
+import { ArticlesLayout } from '@/components/articles/ArticlesLayout'
 import type { Article } from '@/lib/notion.types'
 
 interface ArticlesPageProps {
@@ -24,7 +24,7 @@ export default async function ArticlesPage({ params }: ArticlesPageProps) {
       <div style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
         paddingTop: 56, paddingBottom: 28,
-        borderBottom: '1px solid var(--line)', marginBottom: 56,
+        borderBottom: '1px solid var(--line)', marginBottom: 48,
         fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em',
       }}>
         <span>{isRu ? 'БАЗА ЗНАНИЙ' : 'KNOWLEDGE BASE'}</span>
@@ -35,7 +35,7 @@ export default async function ArticlesPage({ params }: ArticlesPageProps) {
       <h1 style={{
         fontFamily: 'var(--font-serif)', fontWeight: 400,
         fontSize: 'clamp(56px, 8vw, 120px)', lineHeight: .9,
-        letterSpacing: '-.035em', margin: '0 0 80px',
+        letterSpacing: '-.035em', margin: '0 0 64px',
       }}>
         <span style={{ display: 'block' }}>{isRu ? 'База' : 'Knowledge'}</span>
         <span style={{ display: 'block', color: 'var(--muted)', fontStyle: 'italic' }}>
@@ -58,7 +58,7 @@ export default async function ArticlesPage({ params }: ArticlesPageProps) {
           </p>
         </div>
       ) : (
-        <ArticleFilters articles={articles} locale={locale} isRu={isRu} />
+        <ArticlesLayout articles={articles} locale={locale} isRu={isRu} />
       )}
 
     </div>
