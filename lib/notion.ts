@@ -87,10 +87,12 @@ export function transformArticle(page: NotionPage): Article {
 export async function getArticles(language?: 'ru' | 'en'): Promise<Article[]> {
   const data = await notionFetch(`databases/${databaseId}/query`, {
     filter: { property: 'Status', select: { equals: 'Published' } },
+    sorts: [{ property: 'UpdatedAt', direction: 'descending' }],
   })
 
   return (data.results ?? [])
     .map((page: NotionPage) => transformArticle(page))
+    .filter((a: Article) => a.slug && a.title)
     .filter((a: Article) => !language || a.language === language || a.language === 'both')
 }
 
