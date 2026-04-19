@@ -14,11 +14,10 @@ export function Navbar({ locale }: NavbarProps) {
   const base = `/${locale}`
 
   const links = [
-    { href: base, label: locale === 'ru' ? 'Главная' : 'Home' },
-    { href: `${base}/articles`, label: locale === 'ru' ? 'База знаний' : 'Knowledge' },
-    { href: `${base}/roadmap`, label: 'Roadmap' },
-    { href: `${base}/tools`, label: locale === 'ru' ? 'Инструменты' : 'Tools' },
-    { href: `${base}/about`, label: locale === 'ru' ? 'Об авторе' : 'About' },
+    { href: base, label: locale === 'ru' ? 'База знаний' : 'Knowledge', matchPrefixes: [`${base}/articles`] },
+    { href: `${base}/roadmap`, label: 'Roadmap', matchPrefixes: [] },
+    { href: `${base}/tools`, label: locale === 'ru' ? 'Инструменты' : 'Tools', matchPrefixes: [] },
+    { href: `${base}/about`, label: locale === 'ru' ? 'Об авторе' : 'About', matchPrefixes: [] },
   ]
 
   return (
@@ -44,8 +43,8 @@ export function Navbar({ locale }: NavbarProps) {
 
         {/* Nav links */}
         <div className="flex items-center gap-0.5 ml-6">
-          {links.map(({ href, label }) => {
-            const isActive = pathname === href || (href !== base && pathname.startsWith(href))
+          {links.map(({ href, label, matchPrefixes }) => {
+            const isActive = pathname === href || matchPrefixes.some(p => pathname.startsWith(p))
             return (
               <Link
                 key={href}
