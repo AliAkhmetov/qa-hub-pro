@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher'
 import { LangToggle } from '@/components/ui/LangToggle'
 import { isSidebarRoute } from '@/lib/sidebar'
+import { FIRST_TOOL } from '@/config/tools'
 
 interface NavbarProps {
   locale: string
@@ -20,7 +21,7 @@ export function Navbar({ locale }: NavbarProps) {
   const links = [
     { href: base, label: locale === 'ru' ? 'База знаний' : 'Knowledge', forceActive: isKnowledgeActive },
     { href: `${base}/roadmap`, label: 'Roadmap', matchPrefixes: [] },
-    { href: `${base}/tools`, label: locale === 'ru' ? 'Инструменты' : 'Tools', matchPrefixes: [] },
+    { href: `/${locale}/tools/${FIRST_TOOL.slug}`, label: locale === 'ru' ? 'Инструменты' : 'Tools', matchPrefixes: [`${base}/tools`] },
     { href: `${base}/about`, label: locale === 'ru' ? 'Об авторе' : 'About', matchPrefixes: [] },
   ]
 

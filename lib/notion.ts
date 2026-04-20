@@ -64,6 +64,16 @@ async function notionFetch(path: string, body?: object) {
   return res.json()
 }
 
+function visibleStatusFilter() {
+  return {
+    or: [
+      { property: 'Status', select: { equals: 'Draft' } },
+      { property: 'Status', select: { equals: 'Published' } },
+      { property: 'Status', select: { equals: 'Approved' } },
+    ],
+  }
+}
+
 export function extractPlainText(richTexts: RichText[]): string {
   return richTexts.map((rt) => rt.plain_text).join('')
 }
@@ -96,7 +106,7 @@ function matchesLanguage(article: Article, language?: 'ru' | 'en'): boolean {
 
 export async function getKnowledgeArticles(language?: 'ru' | 'en'): Promise<Article[]> {
   const data = await notionFetch(`databases/${databaseId}/query`, {
-    filter: { property: 'Status', select: { equals: 'Published' } },
+    filter: visibleStatusFilter(),
     sorts: [{ property: 'UpdatedAt', direction: 'descending' }],
   })
 
@@ -113,7 +123,7 @@ export async function getArticleByPath(path: string): Promise<Article | null> {
     filter: {
       and: [
         { property: 'Path', rich_text: { equals: path } },
-        { property: 'Status', select: { equals: 'Published' } },
+        visibleStatusFilter(),
       ],
     },
   })

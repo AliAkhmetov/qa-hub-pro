@@ -5,7 +5,7 @@ export interface Article {
   path: string
   category: string
   level: string[]
-  status: 'Draft' | 'Published'
+  status: 'Draft' | 'Published' | 'Approved'
   language: 'ru' | 'en' | 'both'
   readTime: number
   updatedAt: string

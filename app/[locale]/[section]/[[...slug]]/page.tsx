@@ -15,6 +15,26 @@ interface KnowledgeRoutePageProps {
   params: Promise<{ locale: string; section: string; slug?: string[] }>
 }
 
+function getStatusBadge(status?: 'Draft' | 'Published' | 'Approved') {
+  if (!status) return null
+
+  if (status === 'Draft') {
+    return {
+      label: 'Draft',
+      textColor: '#b07a16',
+      background: 'rgba(214, 171, 71, 0.14)',
+      borderColor: 'rgba(214, 171, 71, 0.28)',
+    }
+  }
+
+  return {
+    label: status === 'Published' ? 'Published' : 'Approved',
+    textColor: 'var(--success)',
+    background: 'color-mix(in oklab, var(--success) 14%, transparent)',
+    borderColor: 'color-mix(in oklab, var(--success) 28%, transparent)',
+  }
+}
+
 function buildDescription(title: string, href: string) {
   return `Материал «${title}» уже закреплён в структуре базы знаний. Маршрут ${href} готов для подключения контента из Notion.`
 }
@@ -50,6 +70,7 @@ export default async function KnowledgeRoutePage({ params }: KnowledgeRoutePageP
   const toc = content ? extractToc(content.blocks) : []
   const { previous, next } = getAdjacentSidebarLeafEntries(locale, href)
   const description = content?.article.description || buildDescription(entry.item.title, href)
+  const statusBadge = getStatusBadge(content?.article.status)
 
   return (
     <section style={{ paddingTop: 52 }}>
@@ -78,19 +99,45 @@ export default async function KnowledgeRoutePage({ params }: KnowledgeRoutePageP
           ))}
         </nav>
 
-        <h1
-          style={{
-            fontFamily: 'var(--font-serif)',
-            fontWeight: 400,
-            fontSize: 'clamp(40px, 5vw, 68px)',
-            lineHeight: 1.02,
-            letterSpacing: '-.03em',
-            margin: '0 0 20px',
-            maxWidth: '14ch',
-          }}
-        >
-          {content?.article.title || entry.item.title}
-        </h1>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: 14, marginBottom: 20 }}>
+          <h1
+            style={{
+              fontFamily: 'var(--font-serif)',
+              fontWeight: 400,
+              fontSize: 'clamp(40px, 5vw, 68px)',
+              lineHeight: 1.02,
+              letterSpacing: '-.03em',
+              margin: 0,
+              maxWidth: '14ch',
+            }}
+          >
+            {content?.article.title || entry.item.title}
+          </h1>
+
+          {statusBadge && (
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '7px 12px',
+                borderRadius: 999,
+                border: `1px solid ${statusBadge.borderColor}`,
+                background: statusBadge.background,
+                color: statusBadge.textColor,
+                fontFamily: 'var(--font-mono)',
+                fontSize: 11,
+                lineHeight: 1,
+                letterSpacing: '.12em',
+                textTransform: 'uppercase',
+                marginTop: 10,
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {statusBadge.label}
+            </span>
+          )}
+        </div>
 
         <p style={{ fontSize: 18, lineHeight: 1.65, color: 'var(--fg-soft)', margin: '0 0 28px', maxWidth: '56ch' }}>
           {description}
@@ -162,7 +209,7 @@ export default async function KnowledgeRoutePage({ params }: KnowledgeRoutePageP
             </div>
             <p style={{ margin: '0 0 12px', color: 'var(--fg-soft)', lineHeight: 1.65 }}>
               Эта страница уже участвует в новой sidebar-структуре и имеет постоянный URL. Чтобы здесь появился реальный материал,
-              добавь в Notion запись с полем <code>Path</code> и значением <code>{href}</code>, затем переведи её в <code>Published</code>.
+              добавь в Notion запись с полем <code>Path</code> и значением <code>{href}</code>, затем переведи её в <code>Approved</code>.
             </p>
             <p style={{ margin: 0, fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--muted)' }}>{href}</p>
           </div>
