@@ -76,29 +76,16 @@ export default async function AboutPage({ params }: AboutPageProps) {
           </div>
           <h1 style={{
             fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(56px, 9vw, 130px)',
-            lineHeight: .88, letterSpacing: '-.03em', margin: 0, fontWeight: 400,
+            fontSize: 'clamp(36px, 5vw, 64px)',
+            lineHeight: 1.05, letterSpacing: '-.03em', margin: '0 0 20px', fontWeight: 400,
           }}>
-            {isRu ? (
-              <>Веду <i style={{ color: 'var(--muted)' }}>QA&#8209;команду</i><br />в банке.<br />Пишу <i style={{ color: 'var(--muted)' }}>о&nbsp;ремесле.</i></>
-            ) : (
-              <>Lead a <i style={{ color: 'var(--muted)' }}>QA&nbsp;team</i><br />at a bank.<br />Write <i style={{ color: 'var(--muted)' }}>about&nbsp;craft.</i></>
-            )}
+            {isRu ? 'Team Lead QA. Пишу о ремесле.' : 'Team Lead QA. Writing about craft.'}
           </h1>
-        </div>
-
-        {/* Portrait placeholder */}
-        <div style={{
-          aspectRatio: '4/5', borderRadius: 20, position: 'relative', overflow: 'hidden',
-          background: 'radial-gradient(circle at 30% 25%, #d8bb84 0%, #a88545 35%, transparent 60%), radial-gradient(circle at 75% 75%, #2a241c 0%, #0b0b0c 60%)',
-          boxShadow: 'inset 0 0 0 1px var(--line)',
-        }}>
-          <span style={{ position: 'absolute', left: 20, top: 20, fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(245,243,238,.6)', letterSpacing: '.25em' }}>
-            ALI AKHMETOV · 2026
-          </span>
-          <span style={{ position: 'absolute', left: 20, bottom: 18, fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(245,243,238,.45)', letterSpacing: '.2em' }}>
-            JUSAN BANK · TEAM LEAD QA
-          </span>
+          <p style={{ fontSize: 18, lineHeight: 1.6, color: 'var(--fg-soft)', margin: 0, maxWidth: '48ch' }}>
+            {isRu
+              ? 'Веду команду из 22 инженеров в Jusan Bank. QA Hub — личный проект: одно место, где можно учиться тестированию без курсов и рекламы.'
+              : 'Leading a team of 22 engineers at Jusan Bank. QA Hub is my personal project — one place to learn QA without courses or ads.'}
+          </p>
         </div>
       </section>
 
