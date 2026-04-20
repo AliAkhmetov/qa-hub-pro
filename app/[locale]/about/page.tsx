@@ -3,23 +3,23 @@ interface AboutPageProps {
 }
 
 const SKILLS = [
-  { label: 'Playwright · Pytest · Cypress · Detox', level: 5 },
-  { label: 'API · Postman · Newman · Charles Proxy', level: 5 },
+  { label: 'Playwright · Pytest', level: 5 },
+  { label: 'API · Postman · Charles Proxy', level: 5 },
   { label: 'Управление командой QA · найм · онбординг', level: 5 },
-  { label: 'JIRA · Confluence · Zephyr Scale · TestRail', level: 5 },
+  { label: 'JIRA · Confluence · Zephyr Scale', level: 5 },
   { label: 'CI/CD · Docker · Allure · Git · Bash', level: 4 },
-  { label: 'Mobile · iOS · Android · Robot Framework', level: 4 },
+  { label: 'Mobile · iOS · Android · Firebase', level: 4 },
   { label: 'SQL · MySQL · PostgreSQL', level: 4 },
   { label: 'Go · JavaScript · TypeScript', level: 3 },
 ]
 
 const SKILLS_EN = [
-  { label: 'Playwright · Pytest · Cypress · Detox', level: 5 },
-  { label: 'API · Postman · Newman · Charles Proxy', level: 5 },
+  { label: 'Playwright · Pytest', level: 5 },
+  { label: 'API · Postman · Charles Proxy', level: 5 },
   { label: 'QA team management · hiring · onboarding', level: 5 },
-  { label: 'JIRA · Confluence · Zephyr Scale · TestRail', level: 5 },
+  { label: 'JIRA · Confluence · Zephyr Scale', level: 5 },
   { label: 'CI/CD · Docker · Allure · Git · Bash', level: 4 },
-  { label: 'Mobile · iOS · Android · Robot Framework', level: 4 },
+  { label: 'Mobile · iOS · Android · Firebase', level: 4 },
   { label: 'SQL · MySQL · PostgreSQL', level: 4 },
   { label: 'Go · JavaScript · TypeScript', level: 3 },
 ]
