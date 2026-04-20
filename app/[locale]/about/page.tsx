@@ -184,6 +184,39 @@ export default async function AboutPage({ params }: AboutPageProps) {
         </div>
       </section>
 
+      {/* ── OBSERVABILITY & ANALYTICS ── */}
+      <section className="about-sidebar-row" style={{ marginTop: 80, paddingTop: 40, borderTop: '1px solid var(--line)' }}>
+        <span className="about-sidebar-label" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', paddingTop: 8 }}>
+          OBSERVABILITY
+        </span>
+        <div>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 56, margin: '0 0 28px', letterSpacing: '-.02em', fontWeight: 400, lineHeight: 1 }}>
+            {isRu
+              ? <>Мониторинг <i style={{ color: 'var(--muted)' }}>и аналитика</i></>
+              : <>Monitoring <i style={{ color: 'var(--muted)' }}>&amp; analytics</i></>}
+          </h2>
+          <div className="skills-inner-grid">
+            {[
+              { label: isRu ? 'Grafana · дашборды дефектов и метрик QA' : 'Grafana · defect & QA metrics dashboards', level: 5 },
+              { label: isRu ? 'Firebase · Crashlytics · аналитика мобильных' : 'Firebase · Crashlytics · mobile analytics', level: 4 },
+              { label: isRu ? 'Amplitude · продуктовая аналитика событий' : 'Amplitude · product event analytics', level: 4 },
+              { label: isRu ? 'Pandas · анализ данных тестирования' : 'Pandas · test data analysis', level: 3 },
+              { label: isRu ? 'Allure · отчётность по авто-тестам' : 'Allure · automation test reporting', level: 5 },
+              { label: isRu ? 'Kibana · ELK · анализ логов' : 'Kibana · ELK · log analysis', level: 3 },
+            ].map(({ label, level }) => (
+              <div key={label} style={{ padding: '18px 22px', border: '1px solid var(--line)', borderRadius: 14, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
+                <span style={{ fontSize: 14, lineHeight: 1.35 }}>{label}</span>
+                <div style={{ display: 'flex', gap: 3, flexShrink: 0 }}>
+                  {[1,2,3,4,5].map(i => (
+                    <span key={i} style={{ width: 18, height: 4, borderRadius: 999, display: 'block', background: i <= level ? 'var(--accent)' : 'var(--line-strong)' }} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── EXPERIENCE ── */}
       <section className="about-sidebar-row" style={{ marginTop: 120, paddingTop: 40, borderTop: '1px solid var(--line)' }}>
         <span className="about-sidebar-label" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', paddingTop: 8 }}>
