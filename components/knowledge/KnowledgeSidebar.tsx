@@ -167,8 +167,8 @@ export function KnowledgeSidebar({ locale, mobileOpen = false, onClose }: Knowle
 
   return (
     <aside className={`knowledge-sidebar-inner${mobileOpen ? ' is-open' : ''}`}>
-      {/* Mobile close button */}
-      {onClose && (
+      {/* Mobile close button — only in drawer mode */}
+      {mobileOpen && onClose && (
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
           <button
             onClick={onClose}
