@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { KnowledgeShell } from '@/components/knowledge/KnowledgeShell'
 import { getFirstSidebarLeaf, getSidebarLeafEntries, getSidebarSections } from '@/lib/sidebar'
 
 interface HomePageProps {
@@ -31,8 +30,7 @@ export default async function HomePage({ params }: HomePageProps) {
   const firstLeaf = getFirstSidebarLeaf(locale)
 
   return (
-    <KnowledgeShell locale={locale}>
-      <section style={{ paddingTop: 52 }}>
+    <section style={{ paddingTop: 52 }}>
         <div
           style={{
             display: 'inline-flex',
@@ -104,7 +102,6 @@ export default async function HomePage({ params }: HomePageProps) {
             <span>→</span>
           </Link>
         )}
-      </section>
-    </KnowledgeShell>
+    </section>
   )
 }

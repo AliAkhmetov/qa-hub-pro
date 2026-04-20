@@ -3,7 +3,7 @@ import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
-import { TelegramFAB } from '@/components/layout/TelegramFAB'
+import { KnowledgeLayoutWrapper } from '@/components/knowledge/KnowledgeLayoutWrapper'
 
 const LOCALES = ['ru', 'en']
 
@@ -28,11 +28,10 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
     <NextIntlClientProvider locale={locale} messages={messages}>
       <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--bg)' }}>
         <Navbar locale={locale} />
-        <main className="flex-1">
+        <KnowledgeLayoutWrapper locale={locale}>
           {children}
-        </main>
+        </KnowledgeLayoutWrapper>
         <Footer locale={locale} />
-        <TelegramFAB />
       </div>
     </NextIntlClientProvider>
   )

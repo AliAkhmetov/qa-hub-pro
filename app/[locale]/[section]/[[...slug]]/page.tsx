@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArticleContent } from '@/components/article/ArticleContent'
-import { KnowledgeShell } from '@/components/knowledge/KnowledgeShell'
 import { getArticleBlocks, getArticleByPath } from '@/lib/notion'
 import {
   getAdjacentSidebarLeafEntries,
@@ -53,8 +52,7 @@ export default async function KnowledgeRoutePage({ params }: KnowledgeRoutePageP
   const description = content?.article.description || buildDescription(entry.item.title, href)
 
   return (
-    <KnowledgeShell locale={locale}>
-      <section style={{ paddingTop: 52 }}>
+    <section style={{ paddingTop: 52 }}>
         <nav
           style={{
             display: 'flex',
@@ -220,8 +218,7 @@ export default async function KnowledgeRoutePage({ params }: KnowledgeRoutePageP
             )}
           </nav>
         )}
-      </section>
-    </KnowledgeShell>
+    </section>
   )
 }
 

@@ -64,8 +64,6 @@ export function Footer({ locale }: FooterProps) {
           <ul className="flex flex-col gap-2.5">
             {[
               { href: `${base}/about`, label: isRu ? 'Об авторе' : 'About' },
-              { href: `${base}/about#services`, label: isRu ? 'Консультация' : 'Consultation' },
-              { href: 'https://t.me/tacousti', label: 'Telegram ↗' },
             ].map(({ href, label }) => (
               <li key={label}>
                 <Link href={href} className="text-sm transition-colors hover:opacity-80" style={{ color: 'var(--fg-soft)' }}

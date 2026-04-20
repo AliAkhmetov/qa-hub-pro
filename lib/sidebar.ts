@@ -130,3 +130,20 @@ export function getSidebarOpenTitles(locale: string, activeHref?: string): Set<s
 export function getKnowledgeBaseHref(locale: string): string {
   return `/${locale}`
 }
+
+/** Checks recursively whether a group contains a given href */
+function groupContainsHref(group: SidebarGroupNode, href: string): boolean {
+  return group.items.some((node) => {
+    if (isSidebarLeafNode(node)) return normalizeSidebarHref(node.href) === href
+    return groupContainsHref(node, href)
+  })
+}
+
+/** Returns the title of the top-level section that contains the given href, or null */
+export function getSidebarActiveSectionTitle(locale: string, href: string): string | null {
+  const normalizedHref = normalizeSidebarHref(href)
+  for (const section of getSidebarSections(locale)) {
+    if (groupContainsHref(section, normalizedHref)) return section.title
+  }
+  return null
+}

@@ -72,15 +72,6 @@ export function Navbar({ locale }: NavbarProps) {
         <div className="ml-auto flex items-center gap-1.5">
           <LangToggle locale={locale} />
           <ThemeSwitcher />
-          <Link
-            href={`${base}/about#services`}
-            className="nav-cta inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all hover:-translate-y-px"
-            style={{ background: 'var(--accent)', color: 'var(--accent-ink)' }}
-          >
-            <span className="nav-cta-label">{locale === 'ru' ? 'Консультация' : 'Consult'}</span>
-            <span>↗</span>
-          </Link>
-
           {/* Hamburger — mobile only */}
           <button
             className="nav-hamburger"

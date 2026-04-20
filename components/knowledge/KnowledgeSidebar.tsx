@@ -2,12 +2,12 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { SidebarGroupNode, SidebarNode } from '@/config/sidebar.ru'
 import {
   getKnowledgeBaseHref,
+  getSidebarActiveSectionTitle,
   getSidebarLeafEntries,
-  getSidebarOpenTitles,
   getSidebarSections,
   isSidebarLeafNode,
   normalizeSidebarHref,
@@ -20,55 +20,62 @@ interface KnowledgeSidebarProps {
 }
 
 function countLeafNodes(nodes: SidebarNode[]): number {
-  return nodes.reduce((total, node) => {
-    if (isSidebarLeafNode(node)) return total + 1
-    return total + countLeafNodes(node.items)
+  return nodes.reduce((acc, node) => {
+    if (isSidebarLeafNode(node)) return acc + 1
+    return acc + countLeafNodes(node.items)
   }, 0)
 }
 
-function groupContainsHref(group: SidebarGroupNode, href: string): boolean {
+function groupContainsPath(group: SidebarGroupNode, href: string): boolean {
   return group.items.some((node) => {
-    if (isSidebarLeafNode(node)) return node.href === href
-    return groupContainsHref(node, href)
+    if (isSidebarLeafNode(node)) return normalizeSidebarHref(node.href) === href
+    return groupContainsPath(node, href)
   })
 }
 
 export function KnowledgeSidebar({ locale, mobileOpen = false, onClose }: KnowledgeSidebarProps) {
   const pathname = normalizeSidebarHref(usePathname() ?? getKnowledgeBaseHref(locale))
-  const isRu = locale === 'ru'
   const sections = useMemo(() => getSidebarSections(locale), [locale])
   const totalItems = useMemo(() => getSidebarLeafEntries(locale).length, [locale])
-  const defaultOpen = useMemo(() => getSidebarOpenTitles(locale, pathname), [locale, pathname])
-  const [manualOpen, setManualOpen] = useState<Set<string>>(() => new Set())
-  const [manualClosed, setManualClosed] = useState<Set<string>>(() => new Set())
 
-  const isOpen = (title: string) => {
-    if (defaultOpen.has(title)) return !manualClosed.has(title)
-    return manualOpen.has(title)
-  }
+  // Which top-level section contains the active page?
+  const activeSectionTitle = useMemo(
+    () => getSidebarActiveSectionTitle(locale, pathname) ?? sections[0]?.title ?? null,
+    [locale, pathname, sections]
+  )
+
+  // Accordion: single open section at a time
+  // Initial: active section, fallback to first
+  const [openSection, setOpenSection] = useState<string | null>(activeSectionTitle)
+
+  // When navigating to a page in a different section — auto-open it
+  useEffect(() => {
+    if (activeSectionTitle) setOpenSection(activeSectionTitle)
+  }, [activeSectionTitle])
 
   const toggle = (title: string) => {
-    if (defaultOpen.has(title)) {
-      setManualClosed((prev) => {
-        const next = new Set(prev)
-        next.has(title) ? next.delete(title) : next.add(title)
-        return next
-      })
-      return
-    }
-    setManualOpen((prev) => {
-      const next = new Set(prev)
-      next.has(title) ? next.delete(title) : next.add(title)
-      return next
-    })
+    setOpenSection((prev) => (prev === title ? null : title))
   }
+
+  // Scroll active item into center of sidebar
+  const activeLiRef = useRef<HTMLLIElement>(null)
+  const isFirstRender = useRef(true)
+
+  useEffect(() => {
+    if (!activeLiRef.current) return
+    activeLiRef.current.scrollIntoView({
+      block: 'center',
+      behavior: isFirstRender.current ? 'auto' : 'smooth',
+    })
+    isFirstRender.current = false
+  }, [pathname])
 
   function renderNodes(nodes: SidebarNode[], depth = 0): React.ReactNode {
     return nodes.map((node) => {
       if (isSidebarLeafNode(node)) {
-        const isActive = pathname === node.href
+        const isActive = pathname === normalizeSidebarHref(node.href)
         return (
-          <li key={node.href}>
+          <li key={node.href} ref={isActive ? activeLiRef : undefined}>
             <Link
               href={node.href}
               onClick={onClose}
@@ -76,13 +83,17 @@ export function KnowledgeSidebar({ locale, mobileOpen = false, onClose }: Knowle
                 display: 'block',
                 width: '100%',
                 padding: `6px 20px 6px ${34 + depth * 16}px`,
-                background: isActive ? 'color-mix(in oklab, var(--accent) 8%, transparent)' : 'none',
+                background: isActive
+                  ? 'color-mix(in oklab, var(--accent) 10%, transparent)'
+                  : 'none',
                 borderLeft: `2px solid ${isActive ? 'var(--accent)' : 'transparent'}`,
                 fontFamily: 'var(--font-sans)',
                 fontSize: 13,
                 lineHeight: 1.4,
+                fontWeight: isActive ? 500 : 400,
                 color: isActive ? 'var(--fg)' : 'var(--fg-soft)',
                 textAlign: 'left',
+                textDecoration: 'none',
                 transition: 'color .12s, background .12s',
               }}
             >
@@ -92,45 +103,54 @@ export function KnowledgeSidebar({ locale, mobileOpen = false, onClose }: Knowle
         )
       }
 
-      const groupIsOpen = isOpen(node.title)
-      const isActiveGroup = groupContainsHref(node, pathname)
+      // Group node
       const isTopLevel = depth === 0
+      // Top-level: accordion; nested: always open when parent is open
+      const groupIsOpen = isTopLevel ? openSection === node.title : true
+      const isActiveGroup = groupContainsPath(node, pathname)
 
       return (
         <li key={`${depth}-${node.title}`}>
           <button
-            onClick={() => toggle(node.title)}
+            onClick={isTopLevel ? () => toggle(node.title) : undefined}
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: 6,
               width: '100%',
-              padding: isTopLevel ? '7px 20px' : `7px 20px 7px ${20 + depth * 16}px`,
+              padding: isTopLevel ? '7px 20px' : `5px 20px 5px ${20 + depth * 16}px`,
               background: 'none',
               border: 0,
-              cursor: 'pointer',
+              cursor: isTopLevel ? 'pointer' : 'default',
               fontFamily: 'var(--font-mono)',
               fontSize: isTopLevel ? 10 : 11,
-              letterSpacing: isTopLevel ? '.15em' : '.08em',
+              letterSpacing: isTopLevel ? '.15em' : '.06em',
               textTransform: isTopLevel ? 'uppercase' : 'none',
               color: isActiveGroup ? 'var(--fg)' : 'var(--muted)',
               textAlign: 'left',
             }}
           >
-            <span
-              style={{
-                display: 'inline-block',
-                width: 10,
-                textAlign: 'center',
-                transition: 'transform .15s',
-                transform: groupIsOpen ? 'rotate(90deg)' : 'rotate(0deg)',
-                fontSize: 8,
-              }}
-            >
-              ▶
-            </span>
+            {isTopLevel && (
+              <span
+                style={{
+                  display: 'inline-block',
+                  width: 10,
+                  textAlign: 'center',
+                  transition: 'transform .2s',
+                  transform: groupIsOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+                  fontSize: 8,
+                  flexShrink: 0,
+                }}
+              >
+                ▶
+              </span>
+            )}
             <span style={{ flex: 1 }}>{node.title}</span>
-            <span style={{ letterSpacing: 0 }}>{countLeafNodes(node.items)}</span>
+            {isTopLevel && (
+              <span style={{ letterSpacing: 0, color: 'var(--muted)', fontSize: 10 }}>
+                {countLeafNodes(node.items)}
+              </span>
+            )}
           </button>
 
           {groupIsOpen && (
@@ -142,6 +162,8 @@ export function KnowledgeSidebar({ locale, mobileOpen = false, onClose }: Knowle
       )
     })
   }
+
+  const isRu = locale === 'ru'
 
   return (
     <aside className={`knowledge-sidebar-inner${mobileOpen ? ' is-open' : ''}`}>
@@ -156,14 +178,18 @@ export function KnowledgeSidebar({ locale, mobileOpen = false, onClose }: Knowle
               fontFamily: 'var(--font-mono)',
               fontSize: 11,
               color: 'var(--muted)',
+              background: 'none',
+              border: 0,
+              cursor: 'pointer',
               letterSpacing: '.1em',
             }}
           >
-            ✕
+            ✕ ЗАКРЫТЬ
           </button>
         </div>
       )}
 
+      {/* Header */}
       <div
         style={{
           padding: '12px 20px 14px',
