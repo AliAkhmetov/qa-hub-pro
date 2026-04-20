@@ -63,7 +63,7 @@ export function JwtDecoder({ isRu }: { isRu: boolean }) {
   }
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 24 }}>
+    <div className="tool-two-col">
       <div style={panelStyle}>
         <div style={panelHeaderStyle}>
           <span>INPUT · JWT</span>
@@ -73,6 +73,7 @@ export function JwtDecoder({ isRu }: { isRu: boolean }) {
           </div>
         </div>
         <textarea
+          data-testid="jwt-input"
           value={input}
           onChange={e => setInput(e.target.value)}
           spellCheck={false}
@@ -91,7 +92,7 @@ export function JwtDecoder({ isRu }: { isRu: boolean }) {
             <button style={monoBtn} onClick={handleCopy}>{isRu ? 'Копировать payload' : 'Copy payload'}</button>
           </div>
         </div>
-        <div style={{ padding: 18, fontFamily: 'var(--font-mono)', fontSize: 13, lineHeight: 1.6, minHeight: 220, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+        <div data-testid="jwt-output" style={{ padding: 18, fontFamily: 'var(--font-mono)', fontSize: 13, lineHeight: 1.6, minHeight: 220, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
           {decoded?.error ? (
             <span style={{ color: 'var(--danger)', fontSize: 12, letterSpacing: '.1em' }}>ERR · {decoded.error}</span>
           ) : decoded ? (

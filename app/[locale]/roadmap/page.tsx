@@ -72,7 +72,7 @@ export default async function RoadmapPage({ params }: RoadmapPageProps) {
   const isRu = locale === 'ru'
 
   return (
-    <div style={{ maxWidth: 1360, margin: '0 auto', padding: '0 32px 160px' }}>
+    <div className="page-wrap">
 
       {/* ── HEADER ── */}
       <div style={{ paddingTop: 64 }}>
@@ -94,44 +94,34 @@ export default async function RoadmapPage({ params }: RoadmapPageProps) {
       {/* ── ZIGZAG TIMELINE ── */}
       <div style={{ position: 'relative', padding: '32px 0 0' }}>
         {/* Center line */}
-        <div style={{ position: 'absolute', left: '50%', top: 0, bottom: 0, width: 1, background: 'var(--line)', zIndex: 0 }} />
+        <div className="roadmap-timeline-line" />
 
         {LEVELS.map((lvl) => {
           const isLeft = lvl.side === 'left'
           return (
-            <div
-              key={lvl.num}
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 80px 1fr',
-                gap: 0,
-                marginBottom: 80,
-                alignItems: 'start',
-                position: 'relative',
-              }}
-            >
+            <div key={lvl.num} className="roadmap-item">
               {/* Left side — either card or empty */}
               {isLeft ? (
-                <div style={{ gridColumn: 1, marginRight: 40, textAlign: 'right' }}>
+                <div className="roadmap-card-left" style={{ gridColumn: 1, marginRight: 40, textAlign: 'right' }}>
                   <LevelCard lvl={lvl} isRu={isRu} isLeft={true} />
                 </div>
               ) : (
-                <div style={{ gridColumn: 1 }} />
+                <div className="roadmap-item-empty" style={{ gridColumn: 1 }} />
               )}
 
               {/* Center node */}
-              <div style={{ gridColumn: 2, display: 'grid', placeItems: 'center', marginTop: 8, zIndex: 1 }}>
+              <div className="roadmap-item-center" style={{ gridColumn: 2, display: 'grid', placeItems: 'center', marginTop: 8, zIndex: 1 }}>
                 <div style={{ width: 16, height: 16, borderRadius: '999px', background: 'var(--bg)', border: '2px solid var(--accent)', position: 'relative', zIndex: 2 }} />
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--muted)', letterSpacing: '.2em', marginTop: 8 }}>{lvl.yLabel}</span>
               </div>
 
               {/* Right side */}
               {!isLeft ? (
-                <div style={{ gridColumn: 3, marginLeft: 40 }}>
+                <div className="roadmap-card-right" style={{ gridColumn: 3, marginLeft: 40 }}>
                   <LevelCard lvl={lvl} isRu={isRu} isLeft={false} />
                 </div>
               ) : (
-                <div style={{ gridColumn: 3 }} />
+                <div className="roadmap-item-empty" style={{ gridColumn: 3 }} />
               )}
             </div>
           )

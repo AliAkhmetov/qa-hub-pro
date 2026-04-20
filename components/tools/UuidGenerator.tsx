@@ -71,9 +71,9 @@ export function UuidGenerator({ isRu }: { isRu: boolean }) {
       </div>
 
       {uuids.length > 0 && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 12, fontFamily: 'var(--font-mono)', fontSize: 13 }}>
+        <div data-testid="uuid-list" style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 12, fontFamily: 'var(--font-mono)', fontSize: 13 }}>
           {uuids.map((uuid, i) => (
-            <div key={i} style={{
+            <div key={i} data-testid="uuid-item" style={{
               padding: '10px 14px', border: '1px solid var(--line)', borderRadius: 8,
               background: 'var(--bg-soft)', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
             }}>

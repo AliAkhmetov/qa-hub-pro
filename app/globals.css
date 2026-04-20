@@ -244,3 +244,252 @@ code:not(pre code) {
   .bento { grid-template-columns: 1fr; }
   .c-theory, .c-api, .c-mobile, .c-perf, .c-auto, .c-featured, .c-newsletter, .mini-stats { grid-column: span 1; }
 }
+
+/* ── Knowledge base layout ─── */
+.knowledge-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  align-items: start;
+}
+.knowledge-main {
+  min-height: calc(100vh - 56px);
+  padding: 0 56px 120px;
+  max-width: 840px;
+}
+.mobile-menu-btn { display: none; }
+.mobile-sidebar-overlay { display: none; }
+
+@media (max-width: 768px) {
+  .knowledge-shell { display: block; }
+  .knowledge-main { padding: 0 20px 80px; max-width: 100%; }
+  .mobile-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 20px 0 0;
+    padding: 9px 16px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg-soft);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    background: var(--bg-elev);
+    cursor: pointer;
+    transition: border-color .2s;
+  }
+  .mobile-menu-btn:hover { border-color: var(--accent); }
+  .mobile-sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.55);
+    z-index: 49;
+    backdrop-filter: blur(2px);
+  }
+}
+
+/* ── Sidebar drawer on mobile ─── */
+.knowledge-sidebar-inner {
+  position: sticky;
+  top: 56px;
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+  padding: 24px 16px 40px;
+  border-right: 1px solid var(--line);
+  scrollbar-width: thin;
+}
+
+@media (max-width: 768px) {
+  .knowledge-sidebar-inner {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    width: 285px;
+    height: calc(100vh - 56px);
+    z-index: 50;
+    background: var(--bg);
+    border-right: 1px solid var(--line);
+    transform: translateX(-100%);
+    transition: transform .3s cubic-bezier(.2,.7,.2,1);
+    padding: 20px 16px 60px;
+    scrollbar-width: thin;
+  }
+  .knowledge-sidebar-inner.is-open {
+    transform: translateX(0);
+  }
+}
+
+/* ── Two-panel tool grids (stack on mobile) ─── */
+.tool-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 24px;
+}
+@media (max-width: 768px) {
+  .tool-two-col { grid-template-columns: 1fr; }
+}
+
+/* ── Stats grid (3-col → 1-col on mobile) ─── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+@media (max-width: 640px) {
+  .stats-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Page wrappers with responsive padding ─── */
+.page-wrap {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 32px 160px;
+}
+@media (max-width: 640px) {
+  .page-wrap { padding: 0 20px 80px; }
+}
+
+/* ── About page layout ─── */
+.about-header-grid {
+  padding-top: 64px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: end;
+}
+@media (max-width: 768px) {
+  .about-header-grid { grid-template-columns: 1fr; padding-top: 40px; gap: 32px; }
+}
+
+/* 200px sidebar label + content */
+.about-sidebar-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 48px;
+}
+@media (max-width: 768px) {
+  .about-sidebar-row { grid-template-columns: 1fr; gap: 20px; }
+  .about-sidebar-label { display: none; }
+}
+
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  margin-top: 96px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 768px) {
+  .facts-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 48px; }
+}
+@media (max-width: 480px) {
+  .facts-grid { grid-template-columns: 1fr; }
+}
+
+.skills-inner-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+@media (max-width: 640px) {
+  .skills-inner-grid { grid-template-columns: 1fr; }
+}
+
+.exp-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 1fr;
+  gap: 24px;
+  padding: 24px 0;
+}
+@media (max-width: 640px) {
+  .exp-row { grid-template-columns: 1fr; gap: 6px; }
+  .exp-row-period { display: none; }
+}
+
+.services-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 768px) {
+  .services-cards { grid-template-columns: 1fr; }
+}
+
+.contact-grid {
+  margin-top: 160px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .contact-grid { grid-template-columns: 1fr; margin-top: 80px; }
+}
+
+/* ── Roadmap page ─── */
+.roadmap-timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: var(--line);
+  z-index: 0;
+}
+.roadmap-item {
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  gap: 0;
+  margin-bottom: 80px;
+  align-items: start;
+  position: relative;
+}
+@media (max-width: 768px) {
+  .roadmap-timeline-line { display: none; }
+  .roadmap-item {
+    display: block;
+    margin-bottom: 20px;
+  }
+  .roadmap-item-empty { display: none; }
+  .roadmap-item-center { display: none; }
+  .roadmap-card-left { margin-right: 0 !important; text-align: left !important; }
+  .roadmap-card-right { margin-left: 0 !important; }
+}
+
+/* ── Navbar mobile ─── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 24px;
+}
+@media (max-width: 640px) {
+  .nav-links {
+    display: none;
+    margin-left: 0;
+  }
+  .nav-links.is-open {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 16px 16px;
+    gap: 4px;
+    z-index: 40;
+  }
+  .nav-hamburger { display: flex !important; }
+  .nav-cta-label { display: none; }
+}
+@media (min-width: 641px) {
+  .nav-hamburger { display: none !important; }
+  .nav-links { display: flex !important; }
+}

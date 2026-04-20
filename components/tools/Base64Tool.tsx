@@ -23,8 +23,8 @@ const taStyle: React.CSSProperties = {
 }
 
 export function Base64Tool({ isRu }: { isRu: boolean }) {
-  const [plain, setPlain] = useState('')
-  const [encoded, setEncoded] = useState('')
+  const [plain, setPlain] = useState('Ali Akhmetov')
+  const [encoded, setEncoded] = useState('QWxpIEFraG1ldG92')
   const [error, setError] = useState('')
 
   function encode() {
@@ -47,7 +47,7 @@ export function Base64Tool({ isRu }: { isRu: boolean }) {
 
   return (
     <>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 24 }}>
+      <div className="tool-two-col">
         <div style={panelStyle}>
           <div style={panelHeaderStyle}>
             <span>PLAIN TEXT</span>
@@ -56,6 +56,7 @@ export function Base64Tool({ isRu }: { isRu: boolean }) {
             </div>
           </div>
           <textarea
+            data-testid="base64-plain"
             value={plain}
             onChange={e => setPlain(e.target.value)}
             spellCheck={false}
@@ -71,6 +72,7 @@ export function Base64Tool({ isRu }: { isRu: boolean }) {
             </div>
           </div>
           <textarea
+            data-testid="base64-encoded"
             value={encoded}
             onChange={e => setEncoded(e.target.value)}
             spellCheck={false}
@@ -80,7 +82,7 @@ export function Base64Tool({ isRu }: { isRu: boolean }) {
         </div>
       </div>
       {error && (
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--danger)', marginTop: 10, letterSpacing: '.1em' }}>
+        <div data-testid="base64-error" style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--danger)', marginTop: 10, letterSpacing: '.1em' }}>
           {error}
         </div>
       )}

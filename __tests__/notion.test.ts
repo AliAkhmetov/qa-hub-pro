@@ -24,6 +24,7 @@ describe('transformArticle', () => {
     properties: {
       Title: { title: [{ plain_text: 'Test Article', annotations: { bold: false, italic: false, code: false, strikethrough: false }, href: null }] },
       Slug: { rich_text: [{ plain_text: 'test-article', annotations: { bold: false, italic: false, code: false, strikethrough: false }, href: null }] },
+      Path: { rich_text: [{ plain_text: '/ru/test-design/test-article', annotations: { bold: false, italic: false, code: false, strikethrough: false }, href: null }] },
       Category: { select: { name: 'Теория' } },
       Level: { multi_select: [{ name: 'Junior' }] },
       Status: { select: { name: 'Published' } },
@@ -40,6 +41,7 @@ describe('transformArticle', () => {
       id: 'abc-123',
       title: 'Test Article',
       slug: 'test-article',
+      path: '/ru/test-design/test-article',
       category: 'Теория',
       level: ['Junior'],
       status: 'Published',

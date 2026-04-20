@@ -35,6 +35,7 @@ interface NotionDateProperty {
 interface NotionPageProperties {
   Title?: NotionTitleProperty
   Slug?: NotionRichTextProperty
+  Path?: NotionRichTextProperty
   Category?: NotionSelectProperty
   Level?: NotionMultiSelectProperty
   Status?: NotionSelectProperty
@@ -74,6 +75,7 @@ export function transformArticle(page: NotionPage): Article {
     id: page.id,
     title: extractPlainText(props.Title?.title ?? []),
     slug: extractPlainText(props.Slug?.rich_text ?? []),
+    path: extractPlainText(props.Path?.rich_text ?? []),
     category: props.Category?.select?.name ?? '',
     level: (props.Level?.multi_select ?? []).map((option) => option.name),
     status: (props.Status?.select?.name as Article['status']) ?? 'Draft',
@@ -84,7 +86,15 @@ export function transformArticle(page: NotionPage): Article {
   }
 }
 
-export async function getArticles(language?: 'ru' | 'en'): Promise<Article[]> {
+function isKnowledgeArticle(article: Article): boolean {
+  return Boolean(article.path && article.title)
+}
+
+function matchesLanguage(article: Article, language?: 'ru' | 'en'): boolean {
+  return !language || article.language === language || article.language === 'both'
+}
+
+export async function getKnowledgeArticles(language?: 'ru' | 'en'): Promise<Article[]> {
   const data = await notionFetch(`databases/${databaseId}/query`, {
     filter: { property: 'Status', select: { equals: 'Published' } },
     sorts: [{ property: 'UpdatedAt', direction: 'descending' }],
@@ -92,13 +102,20 @@ export async function getArticles(language?: 'ru' | 'en'): Promise<Article[]> {
 
   return (data.results ?? [])
     .map((page: NotionPage) => transformArticle(page))
-    .filter((a: Article) => a.slug && a.title)
-    .filter((a: Article) => !language || a.language === language || a.language === 'both')
+    .filter(isKnowledgeArticle)
+    .filter((article: Article) => matchesLanguage(article, language))
 }
 
-export async function getArticleBySlug(slug: string): Promise<Article | null> {
+export const getArticles = getKnowledgeArticles
+
+export async function getArticleByPath(path: string): Promise<Article | null> {
   const data = await notionFetch(`databases/${databaseId}/query`, {
-    filter: { property: 'Slug', rich_text: { equals: slug } },
+    filter: {
+      and: [
+        { property: 'Path', rich_text: { equals: path } },
+        { property: 'Status', select: { equals: 'Published' } },
+      ],
+    },
   })
 
   if (!data.results?.length) return null

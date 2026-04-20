@@ -10,6 +10,6 @@ describe('TelegramFAB', () => {
 
   it('shows consultation text', () => {
     render(<TelegramFAB />)
-    expect(screen.getByText(/consultation/i)).toBeInTheDocument()
+    expect(screen.getByText(/консультация/i)).toBeInTheDocument()
   })
 })

@@ -25,7 +25,6 @@ function applyRegex(pattern: string, flags: string, text: string): { html: strin
   if (!pattern) return { html: escHtml(text), count: 0 }
   try {
     const safeFlags = flags.includes('g') ? flags : flags + 'g'
-    const re = new RegExp(pattern, safeFlags)
     let count = 0
     const html = escHtml(text).replace(
       new RegExp(escHtml(pattern).replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&'), safeFlags),
@@ -63,6 +62,7 @@ export function RegexTester({ isRu }: { isRu: boolean }) {
         <div style={{ padding: '16px 18px', display: 'flex', gap: 12, alignItems: 'center', fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--muted)' }}>
           <span>/</span>
           <input
+            data-testid="regex-pattern"
             value={pattern}
             onChange={e => setPattern(e.target.value)}
             placeholder="\\b[\\w.+-]+@…"
@@ -70,6 +70,7 @@ export function RegexTester({ isRu }: { isRu: boolean }) {
           />
           <span>/</span>
           <input
+            data-testid="regex-flags"
             value={flags}
             onChange={e => setFlags(e.target.value)}
             placeholder="gi"
@@ -87,6 +88,7 @@ export function RegexTester({ isRu }: { isRu: boolean }) {
           </span>
         </div>
         <textarea
+          data-testid="regex-text"
           value={text}
           onChange={e => setText(e.target.value)}
           spellCheck={false}

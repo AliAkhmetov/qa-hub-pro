@@ -2,6 +2,7 @@ export interface Article {
   id: string
   title: string
   slug: string
+  path: string
   category: string
   level: string[]
   status: 'Draft' | 'Published'

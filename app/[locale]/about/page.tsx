@@ -58,10 +58,10 @@ export default async function AboutPage({ params }: AboutPageProps) {
   const isRu = locale === 'ru'
 
   return (
-    <div style={{ maxWidth: 1360, margin: '0 auto', padding: '0 32px 160px' }}>
+    <div className="page-wrap">
 
       {/* ── HEADER ── */}
-      <section style={{ paddingTop: 64, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, alignItems: 'end' }}>
+      <section className="about-header-grid">
         <div>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', textTransform: 'uppercase', marginBottom: 20 }}>
             <span style={{ width: 24, height: 1, background: 'var(--muted)', display: 'inline-block' }} />
@@ -88,8 +88,8 @@ export default async function AboutPage({ params }: AboutPageProps) {
       </section>
 
       {/* ── BIO ── */}
-      <section style={{ paddingTop: 80, display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48 }}>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', paddingTop: 8 }}>BIO · RU EN</span>
+      <section className="about-sidebar-row" style={{ paddingTop: 80 }}>
+        <span className="about-sidebar-label" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', paddingTop: 8 }}>BIO · RU EN</span>
         <div style={{ fontSize: 20, lineHeight: 1.55, color: 'var(--fg-soft)' }}>
           {isRu ? (
             <>
@@ -112,7 +112,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
                 QA Hub is my personal project. I started it because I was tired of pointing juniors to random articles and realised: <strong style={{ color: 'var(--fg)', fontWeight: 500 }}>there is no decent Russian-language QA knowledge base</strong>. There are paid courses, there are Telegram fragments, but no single place to sit, read, and actually learn something over six months.
               </p>
               <p style={{ margin: 0 }}>
-                No ads, no sales pages, no "become a tester in three months." Just articles, practice, and tools.
+                No ads, no sales pages, no &quot;become a tester in three months.&quot; Just articles, practice, and tools.
               </p>
             </>
           )}
@@ -120,7 +120,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
       </section>
 
       {/* ── FACTS ── */}
-      <div style={{ marginTop: 96, paddingTop: 32, borderTop: '1px solid var(--line)', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 32 }}>
+      <div className="facts-grid">
         {[
           { n: '10', suffix: isRu ? 'лет' : 'yr', l: isRu ? 'в тестировании' : 'in testing' },
           { n: '14', suffix: '', l: isRu ? 'человек в команде' : 'engineers led' },
@@ -138,13 +138,13 @@ export default async function AboutPage({ params }: AboutPageProps) {
       </div>
 
       {/* ── SKILLS ── */}
-      <section style={{ marginTop: 120, paddingTop: 40, borderTop: '1px solid var(--line)', display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48 }}>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', paddingTop: 8 }}>STACK &amp; SKILLS</span>
+      <section className="about-sidebar-row" style={{ marginTop: 120, paddingTop: 40, borderTop: '1px solid var(--line)' }}>
+        <span className="about-sidebar-label" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', paddingTop: 8 }}>STACK &amp; SKILLS</span>
         <div>
           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 56, margin: '0 0 28px', letterSpacing: '-.02em', fontWeight: 400, lineHeight: 1 }}>
             {isRu ? <>Чем <i style={{ color: 'var(--muted)' }}>пользуюсь</i> каждый день</> : <>What I use <i style={{ color: 'var(--muted)' }}>every day</i></>}
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
+          <div className="skills-inner-grid">
             {SKILLS.map(({ label, level }) => (
               <div key={label} style={{ padding: '18px 22px', border: '1px solid var(--line)', borderRadius: 14, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 15 }}>{label}</span>
@@ -160,16 +160,16 @@ export default async function AboutPage({ params }: AboutPageProps) {
       </section>
 
       {/* ── EXPERIENCE ── */}
-      <section style={{ marginTop: 120, paddingTop: 40, borderTop: '1px solid var(--line)', display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48 }}>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', paddingTop: 8 }}>EXPERIENCE</span>
+      <section className="about-sidebar-row" style={{ marginTop: 120, paddingTop: 40, borderTop: '1px solid var(--line)' }}>
+        <span className="about-sidebar-label" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', paddingTop: 8 }}>EXPERIENCE</span>
         <div>
           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 56, margin: '0 0 28px', letterSpacing: '-.02em', fontWeight: 400, lineHeight: 1 }}>
             {isRu ? <>Где <i style={{ color: 'var(--muted)' }}>работал</i></> : <>Where I <i style={{ color: 'var(--muted)' }}>worked</i></>}
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {EXPERIENCE.map((exp, i) => (
-              <div key={exp.period} style={{ display: 'grid', gridTemplateColumns: '120px 1fr 1fr', gap: 24, padding: '24px 0', borderBottom: i < EXPERIENCE.length - 1 ? '1px solid var(--line)' : 'none' }}>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.15em', paddingTop: 8 }}>{exp.period}</span>
+              <div key={exp.period} className="exp-row" style={{ borderBottom: i < EXPERIENCE.length - 1 ? '1px solid var(--line)' : 'none' }}>
+                <span className="exp-row-period" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.15em', paddingTop: 8 }}>{exp.period}</span>
                 <div>
                   <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: 28, margin: '0 0 4px', letterSpacing: '-.01em', fontWeight: 400 }}>{exp.role}</h4>
                   <p style={{ margin: 0, color: 'var(--fg-soft)', fontSize: 14, lineHeight: 1.55 }}>{isRu ? exp.descRu : exp.descEn}</p>
@@ -183,8 +183,8 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
       {/* ── SERVICES ── */}
       <section id="services" style={{ marginTop: 160, padding: '56px 0 64px', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, alignItems: 'end', marginBottom: 48 }}>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em' }}>SERVICES · DELICATELY</span>
+        <div className="about-sidebar-row" style={{ alignItems: 'end', marginBottom: 48 }}>
+          <span className="about-sidebar-label" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em' }}>SERVICES · DELICATELY</span>
           <div>
             <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 72, margin: 0, letterSpacing: '-.02em', fontWeight: 400, lineHeight: 1 }}>
               {isRu ? <>Личные <i style={{ color: 'var(--muted)' }}>консультации</i></> : <>Personal <i style={{ color: 'var(--muted)' }}>consulting</i></>}
@@ -197,7 +197,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+        <div className="services-cards">
           {SERVICES.map((svc) => (
             <div
               key={svc.num}
@@ -259,7 +259,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
       </section>
 
       {/* ── CONTACT ── */}
-      <section style={{ marginTop: 160, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, alignItems: 'center' }}>
+      <section className="contact-grid">
         <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 80, margin: 0, letterSpacing: '-.03em', fontWeight: 400, lineHeight: .9 }}>
           {isRu ? <>Написать<br /><i style={{ color: 'var(--muted)' }}>лично.</i></> : <>Get in<br /><i style={{ color: 'var(--muted)' }}>touch.</i></>}
         </h2>

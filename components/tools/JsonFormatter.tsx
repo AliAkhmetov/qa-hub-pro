@@ -23,7 +23,7 @@ const taStyle: React.CSSProperties = {
 }
 
 export function JsonFormatter({ isRu }: { isRu: boolean }) {
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState('{"name":"ali","skills":["qa","api"]}')
   const [output, setOutput] = useState('')
   const [status, setStatus] = useState<{ ok: boolean; msg: string } | null>(null)
 
@@ -55,7 +55,7 @@ export function JsonFormatter({ isRu }: { isRu: boolean }) {
 
   return (
     <>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 24 }}>
+      <div className="tool-two-col">
         <div style={panelStyle}>
           <div style={panelHeaderStyle}>
             <span>INPUT</span>
@@ -65,6 +65,7 @@ export function JsonFormatter({ isRu }: { isRu: boolean }) {
             </div>
           </div>
           <textarea
+            data-testid="json-input"
             value={input}
             onChange={e => setInput(e.target.value)}
             spellCheck={false}
@@ -80,6 +81,7 @@ export function JsonFormatter({ isRu }: { isRu: boolean }) {
             </div>
           </div>
           <textarea
+            data-testid="json-output"
             value={output}
             readOnly
             spellCheck={false}
