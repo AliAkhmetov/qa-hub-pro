@@ -3,59 +3,62 @@ interface AboutPageProps {
 }
 
 const SKILLS = [
-  { label: 'API testing · Postman, RestAssured', level: 5 },
-  { label: 'Автоматизация · Playwright, Selenium', level: 4 },
-  { label: 'Perf · JMeter, k6', level: 4 },
-  { label: 'Mobile · Appium, iOS / Android', level: 3 },
-  { label: 'CI/CD · GitLab, Jenkins, ArgoCD', level: 4 },
-  { label: 'SQL / Kafka / Observability', level: 4 },
-  { label: 'Ведение команды, найм, грейдинг', level: 5 },
-  { label: 'Security basics · OWASP, JWT, OAuth', level: 3 },
+  { label: 'Playwright · Pytest · Cypress · Detox', level: 5 },
+  { label: 'API · Postman · Newman · Charles Proxy', level: 5 },
+  { label: 'Управление командой QA · найм · онбординг', level: 5 },
+  { label: 'JIRA · Confluence · Zephyr Scale · TestRail', level: 5 },
+  { label: 'CI/CD · Docker · Allure · Git · Bash', level: 4 },
+  { label: 'Mobile · iOS · Android · Robot Framework', level: 4 },
+  { label: 'SQL · MySQL · PostgreSQL', level: 4 },
+  { label: 'Go · JavaScript · TypeScript', level: 3 },
+]
+
+const SKILLS_EN = [
+  { label: 'Playwright · Pytest · Cypress · Detox', level: 5 },
+  { label: 'API · Postman · Newman · Charles Proxy', level: 5 },
+  { label: 'QA team management · hiring · onboarding', level: 5 },
+  { label: 'JIRA · Confluence · Zephyr Scale · TestRail', level: 5 },
+  { label: 'CI/CD · Docker · Allure · Git · Bash', level: 4 },
+  { label: 'Mobile · iOS · Android · Robot Framework', level: 4 },
+  { label: 'SQL · MySQL · PostgreSQL', level: 4 },
+  { label: 'Go · JavaScript · TypeScript', level: 3 },
 ]
 
 const EXPERIENCE = [
-  { period: '2022 — NOW', role: 'QA Team Lead', company: 'ALATAU CITY BANK', descRu: '14 инженеров, мобильный банк, интернет-банк, внутренняя платформа. Перенос регрессии с Selenium на Playwright, первые нагрузочные в k6.', descEn: '14 engineers, mobile bank, internet banking, internal platform. Migrated regression from Selenium to Playwright, first k6 load tests.' },
-  { period: '2019 — 2022', role: 'Senior QA Engineer', company: 'BANK №2 · ALMATY', descRu: 'Отвечал за процессинг и карточные интеграции. Построил фреймворк автотестов для card-present операций.', descEn: 'Owned payment processing and card integrations. Built an automation framework for card-present operations.' },
-  { period: '2017 — 2019', role: 'QA Engineer', company: 'BANK №3 · ALMATY', descRu: 'Интернет-банк для ЮЛ. Перешёл от ручного тестирования к автоматизации API и UI.', descEn: 'Corporate internet banking. Transitioned from manual testing to API and UI automation.' },
-  { period: '2016 — 2017', role: 'Junior QA', company: 'FINTECH · REMOTE', descRu: 'Первая работа. Чек-листы, регрессия, bug-report-гигиена.', descEn: 'First job. Checklists, regression cycles, bug report hygiene.' },
-]
-
-const SERVICES = [
   {
-    num: 'SESSION / 01',
-    titleRu: <>Разбор <i style={{ color: 'var(--muted)' }}>резюме</i><br />и карьеры</>,
-    titleEn: <>CV review<br />& <i style={{ color: 'var(--muted)' }}>career</i></>,
-    price: '25 000',
-    unit: '₸ / 45 МИН',
-    itemsRu: ['Разбираю CV построчно', 'Подсвечиваю дыры в навыках', 'Даю план на 3 месяца', 'Запись разговора остаётся у вас'],
-    itemsEn: ['Line-by-line CV review', 'Identify skill gaps', 'A 3-month growth plan', 'Recording is yours to keep'],
-    featured: false,
+    period: '2024 — NOW',
+    role: 'Team Lead QA',
+    company: 'JUSAN BANK · ALMATY',
+    descRu: '22 инженера в команде, нанял и провёл онбординг 8 новых. Внедрил Zephyr Scale, настроил метрики и дашборды дефектов. Сократил продакшн-баги на 25% и хотфиксы на 40%. Запустил автоматизацию API-тестов на Pytest с CI/CD и отчётностью в Allure.',
+    descEn: 'Led a QA team of 22 engineers; hired and onboarded 8 new members. Rolled out Zephyr Scale as TMS, set up defect metrics and dashboards. Reduced production bugs by 25% and hotfixes by 40%. Launched API test automation with Pytest, CI/CD and Allure reporting.',
   },
   {
-    num: 'SESSION / 02 — MOST BOOKED',
-    titleRu: <>Разбор <i>проекта</i> или процесса</>,
-    titleEn: <>Process or project<br /><i>deep-dive</i></>,
-    price: '45 000',
-    unit: '₸ / 90 МИН',
-    itemsRu: ['Смотрим ваш текущий процесс QA', 'Находим узкие места', 'План миграции на автоматизацию', 'Шаблоны документации и чек-листов'],
-    itemsEn: ['Audit your current QA process', 'Find the bottlenecks', 'Automation migration plan', 'Documentation & checklist templates'],
-    featured: true,
+    period: '2022 — 2024',
+    role: 'Tech Lead QA',
+    company: 'JUSAN BANK · ALMATY',
+    descRu: 'Разработал регламенты и понятные инструкции для отдела QA по Postman, Charles, Grafana, Xcode, TestRail и другим инструментам. Проектировал и выполнял скрипты автоматизации с использованием TestRail, Playwright и Newman.',
+    descEn: 'Authored QA department guidelines and clear how-tos for Postman, Charles, Grafana, Xcode, TestRail and more. Designed and executed automation scripts using TestRail, Playwright and Newman.',
   },
   {
-    num: 'SESSION / 03',
-    titleRu: <>Наставничество<br />на <i style={{ color: 'var(--muted)' }}>месяц</i></>,
-    titleEn: <>One-month<br /><i style={{ color: 'var(--muted)' }}>mentorship</i></>,
-    price: '120 000',
-    unit: '₸ / 4 НЕД',
-    itemsRu: ['Еженедельные созвоны по 60 мин', 'Домашки с разбором', 'Чат в Telegram 24/7', 'Для тех, кто идёт на собес Middle/Senior'],
-    itemsEn: ['Weekly 60-min calls', 'Homework with review', 'Telegram chat 24/7', 'Aimed at Middle/Senior interview prep'],
-    featured: false,
+    period: '2021 — 2022',
+    role: 'QA Automation Engineer',
+    company: 'STAROFSERVICE · PARIS',
+    descRu: 'Написал автотесты на Detox для мобильного приложения — покрытие выросло с 0 до 90%. Покрыл веб-версию тестами на Robot Framework и Cypress, API — коллекциями Postman.',
+    descEn: 'Wrote Detox autotests for the mobile app, growing coverage from 0 to 90%. Covered the web version with Robot Framework and Cypress tests, and API with Postman collections.',
+  },
+  {
+    period: '2018 — 2020',
+    role: 'Head of Technical Support',
+    company: 'AMOCRM · MOSCOW',
+    descRu: 'Сократил число багов в бэклоге с 1800 до 150. Писал регламенты, инструкции и документацию для пользователей. Нанимал менеджеров техподдержки и разработчиков, интегрировал их в команду разработки.',
+    descEn: 'Reduced the backlog bug count from 1800 to 150. Wrote regulations, user documentation and onboarding materials. Hired support managers and developers, integrated them with the dev team.',
   },
 ]
 
 export default async function AboutPage({ params }: AboutPageProps) {
   const { locale } = await params
   const isRu = locale === 'ru'
+  const skills = isRu ? SKILLS : SKILLS_EN
 
   return (
     <div className="page-wrap">
@@ -63,15 +66,23 @@ export default async function AboutPage({ params }: AboutPageProps) {
       {/* ── HEADER ── */}
       <section className="about-header-grid">
         <div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', textTransform: 'uppercase', marginBottom: 20 }}>
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: 10,
+            fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)',
+            letterSpacing: '.2em', textTransform: 'uppercase', marginBottom: 20,
+          }}>
             <span style={{ width: 24, height: 1, background: 'var(--muted)', display: 'inline-block' }} />
             ALI AKHMETOV · ALMATY
           </div>
-          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(64px, 10vw, 140px)', lineHeight: .88, letterSpacing: '-.03em', margin: 0, fontWeight: 400 }}>
+          <h1 style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: 'clamp(56px, 9vw, 130px)',
+            lineHeight: .88, letterSpacing: '-.03em', margin: 0, fontWeight: 400,
+          }}>
             {isRu ? (
-              <>Веду <i style={{ color: 'var(--muted)' }}>QA-команду</i><br />в банке.<br />Пишу <i style={{ color: 'var(--muted)' }}>о&nbsp;ремесле.</i></>
+              <>Веду <i style={{ color: 'var(--muted)' }}>QA&#8209;команду</i><br />в банке.<br />Пишу <i style={{ color: 'var(--muted)' }}>о&nbsp;ремесле.</i></>
             ) : (
-              <>Lead a <i style={{ color: 'var(--muted)' }}>QA team</i><br />at a bank.<br />Write <i style={{ color: 'var(--muted)' }}>about&nbsp;craft.</i></>
+              <>Lead a <i style={{ color: 'var(--muted)' }}>QA&nbsp;team</i><br />at a bank.<br />Write <i style={{ color: 'var(--muted)' }}>about&nbsp;craft.</i></>
             )}
           </h1>
         </div>
@@ -82,22 +93,26 @@ export default async function AboutPage({ params }: AboutPageProps) {
           background: 'radial-gradient(circle at 30% 25%, #d8bb84 0%, #a88545 35%, transparent 60%), radial-gradient(circle at 75% 75%, #2a241c 0%, #0b0b0c 60%)',
           boxShadow: 'inset 0 0 0 1px var(--line)',
         }}>
-          <span style={{ position: 'absolute', left: 20, top: 20, fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(245,243,238,.6)', letterSpacing: '.25em' }}>ALI AKHMETOV · 2026</span>
-          <span style={{ position: 'absolute', left: 20, bottom: 18, fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(245,243,238,.45)', letterSpacing: '.2em' }}>PORTRAIT · PLACEHOLDER</span>
+          <span style={{ position: 'absolute', left: 20, top: 20, fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(245,243,238,.6)', letterSpacing: '.25em' }}>
+            ALI AKHMETOV · 2026
+          </span>
+          <span style={{ position: 'absolute', left: 20, bottom: 18, fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(245,243,238,.45)', letterSpacing: '.2em' }}>
+            JUSAN BANK · TEAM LEAD QA
+          </span>
         </div>
       </section>
 
       {/* ── BIO ── */}
       <section className="about-sidebar-row" style={{ paddingTop: 80 }}>
-        <span className="about-sidebar-label" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', paddingTop: 8 }}>BIO · RU EN</span>
+        <span className="about-sidebar-label" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', paddingTop: 8 }}>BIO</span>
         <div style={{ fontSize: 20, lineHeight: 1.55, color: 'var(--fg-soft)' }}>
           {isRu ? (
             <>
               <p style={{ margin: '0 0 18px' }}>
-                Меня зовут <strong style={{ color: 'var(--fg)', fontWeight: 500 }}>Ali Akhmetov</strong>. Я работаю QA Team Lead в <strong style={{ color: 'var(--fg)', fontWeight: 500 }}>Alatau City Bank</strong> (Алматы) — веду команду из 14 инженеров, отвечаю за мобильный банк, интернет-банк и внутреннюю платформу.
+                Меня зовут <strong style={{ color: 'var(--fg)', fontWeight: 500 }}>Али Ахметов</strong>. Я работаю Team Lead QA в <strong style={{ color: 'var(--fg)', fontWeight: 500 }}>Jusan Bank</strong> (Алматы) — веду команду из 22 инженеров, отвечаю за кредитный продукт JBCredits. 7+ лет в тестировании: от Head of Technical Support в amoCRM до QA Automation Engineer в StarOfService (Париж) и двух ролей в Jusan Bank.
               </p>
               <p style={{ margin: '0 0 18px' }}>
-                QA Hub — мой личный проект. Я начал его, потому что устал отсылать джунов к случайным статьям в интернете и понял: <strong style={{ color: 'var(--fg)', fontWeight: 500 }}>нормальной русскоязычной базы по тестированию нет</strong>. Есть курсы за деньги, есть обрывки в телеграме, но нет одного места, где можно сесть, почитать, и через полгода уметь что-то новое.
+                QA Hub — мой личный проект. Я начал его, потому что устал отсылать джунов к случайным статьям и понял: <strong style={{ color: 'var(--fg)', fontWeight: 500 }}>нормальной русскоязычной базы по тестированию нет</strong>. Есть курсы за деньги, есть обрывки в телеграме, но нет одного места, где можно сесть, почитать, и через полгода уметь что-то новое.
               </p>
               <p style={{ margin: 0 }}>
                 Здесь нет рекламы, нет продающих лендингов, нет «войди в айти за три месяца». Просто статьи, практика и инструменты.
@@ -106,7 +121,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
           ) : (
             <>
               <p style={{ margin: '0 0 18px' }}>
-                My name is <strong style={{ color: 'var(--fg)', fontWeight: 500 }}>Ali Akhmetov</strong>. I work as QA Team Lead at <strong style={{ color: 'var(--fg)', fontWeight: 500 }}>Alatau City Bank</strong> in Almaty — leading a team of 14 engineers across mobile banking, internet banking, and an internal platform.
+                My name is <strong style={{ color: 'var(--fg)', fontWeight: 500 }}>Ali Akhmetov</strong>. I work as Team Lead QA at <strong style={{ color: 'var(--fg)', fontWeight: 500 }}>Jusan Bank</strong> in Almaty — leading a team of 22 engineers on the JBCredits product. 7+ years in QA: from Head of Technical Support at amoCRM to QA Automation Engineer at StarOfService (Paris) and two roles at Jusan Bank.
               </p>
               <p style={{ margin: '0 0 18px' }}>
                 QA Hub is my personal project. I started it because I was tired of pointing juniors to random articles and realised: <strong style={{ color: 'var(--fg)', fontWeight: 500 }}>there is no decent Russian-language QA knowledge base</strong>. There are paid courses, there are Telegram fragments, but no single place to sit, read, and actually learn something over six months.
@@ -122,35 +137,45 @@ export default async function AboutPage({ params }: AboutPageProps) {
       {/* ── FACTS ── */}
       <div className="facts-grid">
         {[
-          { n: '10', suffix: isRu ? 'лет' : 'yr', l: isRu ? 'в тестировании' : 'in testing' },
-          { n: '14', suffix: '', l: isRu ? 'человек в команде' : 'engineers led' },
-          { n: '4', suffix: '', l: isRu ? 'банка за карьеру' : 'banks in career' },
-          { n: '142', suffix: '', l: isRu ? 'опубликованных статей' : 'published articles' },
+          { n: '7', suffix: '+', l: isRu ? 'лет в QA' : 'years in QA' },
+          { n: '22', suffix: '', l: isRu ? 'инженера в команде' : 'engineers led' },
+          { n: '−25', suffix: '%', l: isRu ? 'продакшн-багов' : 'production bugs' },
+          { n: '90', suffix: '%', l: isRu ? 'покрытие моб. приложения' : 'mobile app coverage' },
         ].map(({ n, suffix, l }) => (
           <div key={l}>
             <div style={{ fontFamily: 'var(--font-serif)', fontSize: 80, lineHeight: .9, letterSpacing: '-.02em' }}>
               {n}
-              {suffix && <em style={{ fontSize: 22, color: 'var(--muted)', fontFamily: 'var(--font-sans)', letterSpacing: '.1em', marginLeft: 4, fontStyle: 'normal' }}>{suffix}</em>}
+              {suffix && (
+                <em style={{ fontSize: 24, color: 'var(--muted)', fontFamily: 'var(--font-sans)', letterSpacing: '.05em', marginLeft: 2, fontStyle: 'normal' }}>
+                  {suffix}
+                </em>
+              )}
             </div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.15em', marginTop: 10, textTransform: 'uppercase' }}>{l}</div>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.15em', marginTop: 10, textTransform: 'uppercase' }}>
+              {l}
+            </div>
           </div>
         ))}
       </div>
 
       {/* ── SKILLS ── */}
       <section className="about-sidebar-row" style={{ marginTop: 120, paddingTop: 40, borderTop: '1px solid var(--line)' }}>
-        <span className="about-sidebar-label" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', paddingTop: 8 }}>STACK &amp; SKILLS</span>
+        <span className="about-sidebar-label" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', paddingTop: 8 }}>
+          STACK &amp; SKILLS
+        </span>
         <div>
           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 56, margin: '0 0 28px', letterSpacing: '-.02em', fontWeight: 400, lineHeight: 1 }}>
-            {isRu ? <>Чем <i style={{ color: 'var(--muted)' }}>пользуюсь</i> каждый день</> : <>What I use <i style={{ color: 'var(--muted)' }}>every day</i></>}
+            {isRu
+              ? <>Чем <i style={{ color: 'var(--muted)' }}>пользуюсь</i> каждый день</>
+              : <>What I use <i style={{ color: 'var(--muted)' }}>every day</i></>}
           </h2>
           <div className="skills-inner-grid">
-            {SKILLS.map(({ label, level }) => (
-              <div key={label} style={{ padding: '18px 22px', border: '1px solid var(--line)', borderRadius: 14, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: 15 }}>{label}</span>
+            {skills.map(({ label, level }) => (
+              <div key={label} style={{ padding: '18px 22px', border: '1px solid var(--line)', borderRadius: 14, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
+                <span style={{ fontSize: 14, lineHeight: 1.35 }}>{label}</span>
                 <div style={{ display: 'flex', gap: 3, flexShrink: 0 }}>
                   {[1,2,3,4,5].map(i => (
-                    <span key={i} style={{ width: 20, height: 4, borderRadius: 999, display: 'block', background: i <= level ? 'var(--accent)' : 'var(--line-strong)' }} />
+                    <span key={i} style={{ width: 18, height: 4, borderRadius: 999, display: 'block', background: i <= level ? 'var(--accent)' : 'var(--line-strong)' }} />
                   ))}
                 </div>
               </div>
@@ -161,20 +186,36 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
       {/* ── EXPERIENCE ── */}
       <section className="about-sidebar-row" style={{ marginTop: 120, paddingTop: 40, borderTop: '1px solid var(--line)' }}>
-        <span className="about-sidebar-label" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', paddingTop: 8 }}>EXPERIENCE</span>
+        <span className="about-sidebar-label" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.2em', paddingTop: 8 }}>
+          EXPERIENCE
+        </span>
         <div>
           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 56, margin: '0 0 28px', letterSpacing: '-.02em', fontWeight: 400, lineHeight: 1 }}>
-            {isRu ? <>Где <i style={{ color: 'var(--muted)' }}>работал</i></> : <>Where I <i style={{ color: 'var(--muted)' }}>worked</i></>}
+            {isRu
+              ? <>Где <i style={{ color: 'var(--muted)' }}>работал</i></>
+              : <>Where I <i style={{ color: 'var(--muted)' }}>worked</i></>}
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {EXPERIENCE.map((exp, i) => (
-              <div key={exp.period} className="exp-row" style={{ borderBottom: i < EXPERIENCE.length - 1 ? '1px solid var(--line)' : 'none' }}>
-                <span className="exp-row-period" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.15em', paddingTop: 8 }}>{exp.period}</span>
+              <div
+                key={exp.period}
+                className="exp-row"
+                style={{ borderBottom: i < EXPERIENCE.length - 1 ? '1px solid var(--line)' : 'none' }}
+              >
+                <span className="exp-row-period" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.15em', paddingTop: 6 }}>
+                  {exp.period}
+                </span>
                 <div>
-                  <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: 28, margin: '0 0 4px', letterSpacing: '-.01em', fontWeight: 400 }}>{exp.role}</h4>
-                  <p style={{ margin: 0, color: 'var(--fg-soft)', fontSize: 14, lineHeight: 1.55 }}>{isRu ? exp.descRu : exp.descEn}</p>
+                  <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: 26, margin: '0 0 6px', letterSpacing: '-.01em', fontWeight: 400 }}>
+                    {exp.role}
+                  </h4>
+                  <p style={{ margin: 0, color: 'var(--fg-soft)', fontSize: 14, lineHeight: 1.6 }}>
+                    {isRu ? exp.descRu : exp.descEn}
+                  </p>
                 </div>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.1em', paddingTop: 8 }}>{exp.company}</span>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--muted)', letterSpacing: '.1em', paddingTop: 6, lineHeight: 1.6 }}>
+                  {exp.company}
+                </span>
               </div>
             ))}
           </div>
@@ -184,21 +225,33 @@ export default async function AboutPage({ params }: AboutPageProps) {
       {/* ── CONTACT ── */}
       <section className="contact-grid">
         <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 80, margin: 0, letterSpacing: '-.03em', fontWeight: 400, lineHeight: .9 }}>
-          {isRu ? <>Написать<br /><i style={{ color: 'var(--muted)' }}>лично.</i></> : <>Get in<br /><i style={{ color: 'var(--muted)' }}>touch.</i></>}
+          {isRu
+            ? <>Написать<br /><i style={{ color: 'var(--muted)' }}>лично.</i></>
+            : <>Get in<br /><i style={{ color: 'var(--muted)' }}>touch.</i></>}
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {[
-            { label: 'Telegram', meta: '@ALIAKHMETOV →', href: 'https://t.me/tacousti' },
-            { label: 'Email', meta: 'ALI@QA-HUB.DEV →', href: 'mailto:ali@qa-hub.dev' },
-            { label: 'LinkedIn', meta: '/IN/ALIAKHMETOV →', href: 'https://linkedin.com/in/aliakhmetov' },
+            { label: 'Telegram', meta: '@TACOUSTI →', href: 'https://t.me/tacousti' },
+            { label: 'Email', meta: 'ALI.AKHMETOV.AMO@GMAIL.COM →', href: 'mailto:ali.akhmetov.amo@gmail.com' },
+            { label: 'LinkedIn', meta: '/IN/ALI-AKHMETOV →', href: 'https://linkedin.com/in/ali-akhmetov' },
+            { label: 'GitHub', meta: '/ALIAKHMETOV →', href: 'https://github.com/AliAkhmetov' },
           ].map(({ label, meta, href }) => (
-            <a key={label} href={href} target="_blank" rel="noopener noreferrer" style={{
-              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-              padding: '20px 24px', border: '1px solid var(--line)', borderRadius: 14,
-              fontSize: 16, transition: '.25s', color: 'inherit',
-            }}>
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                padding: '18px 24px', border: '1px solid var(--line)', borderRadius: 14,
+                fontSize: 16, transition: 'border-color .2s, background .2s',
+                color: 'inherit', textDecoration: 'none',
+              }}
+            >
               <span>{label}</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '.15em' }}>{meta}</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--muted)', letterSpacing: '.12em' }}>
+                {meta}
+              </span>
             </a>
           ))}
         </div>
